@@ -1,0 +1,10 @@
+[run]
+branch = True
+omit = *migrations*,
+       *urls*,
+       *test*,
+       *admin*,
+       ./drfunapp/config/*,
+       ./drfunapp/manage.py,
+       ./drfunapp/wsgi.py,
+       *__init__*

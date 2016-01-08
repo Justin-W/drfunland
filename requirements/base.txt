@@ -1,0 +1,34 @@
+# Django
+Django==1.9
+
+# Environmental var configuration
+# Django 1.8+ compatible django-configurations
+-e git+https://github.com/alfetopito/django-configurations.git@71b5142354aceb5461d29e5d9e1cdf30b64b657f#egg=django_configurations-master
+
+
+# For the persistence stores
+psycopg2==2.6.1
+dj-database-url==0.3.0
+
+# Models
+django-model-utils==2.4
+
+# Rest apis
+djangorestframework==3.3.2
+Markdown==2.6.5
+django-filter==0.11.0
+
+# Static files
+whitenoise==2.0.6
+
+# Media files
+boto==2.38.0
+
+# Image manipulation
+django-versatileimagefield==1.2
+
+# For asynchronous queuing
+django-rq==0.9.0
+
+# Time zones support
+pytz==2015.7
