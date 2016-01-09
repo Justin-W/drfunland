@@ -15,16 +15,16 @@ script:
 after_success:
   - coveralls
 
-deploy:
-  provider: heroku
-  app:
-    master: drfunapp-dev
-    qa: drfunapp-qa
-    prod: drfunapp-prod
-  on:
-    repo: Justin-W/drfunland
-  run:
-    - "./drfunapp/manage.py migrate"
+#deploy:
+#  provider: heroku
+#  app:
+#    master: drfunapp-dev
+#    qa: drfunapp-qa
+#    prod: drfunapp-prod
+#  on:
+#    repo: Justin-W/drfunland
+#  run:
+#    - "./drfunapp/manage.py migrate"
 
 notifications:
   email: false
