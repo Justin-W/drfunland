@@ -1,7 +1,7 @@
 # drfunland
 [![Build Status](https://travis-ci.org/Justin-W/drfunland.svg?branch=master)](https://travis-ci.org/Justin-W/drfunland)
 
-Django REST Framework playground.. Check out the project's [documentation](http://Justin-W.github.io/drfunland/).
+Django REST Framework playground. A fun place to play around with [DRF](http://www.django-rest-framework.org/). Check out the project's [documentation](http://Justin-W.github.io/drfunland/).
 
 # Prerequisites 
 - [virtualenv](https://virtualenv.pypa.io/en/latest/)
