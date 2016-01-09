@@ -11,7 +11,7 @@ class UserViewSet(mixins.CreateModelMixin,
                   mixins.UpdateModelMixin,
                   viewsets.GenericViewSet):
     """
-    Creates, Updates, and retrives User accounts
+    Creates, Updates, and retrieves User accounts
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
