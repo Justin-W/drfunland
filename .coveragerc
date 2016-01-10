@@ -7,4 +7,8 @@ omit = *migrations*,
        ./drfunapp/config/*,
        ./drfunapp/manage.py,
        ./drfunapp/wsgi.py,
+       # see: https://github.com/django-nose/django-nose/issues/180
+       ./drfunapp/authentication/models.py,
+       ./drfunapp/users/models.py,
+       #./drfunapp/*/models.py,
        *__init__*

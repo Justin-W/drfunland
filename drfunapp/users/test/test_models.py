@@ -6,6 +6,10 @@ from ..models import User
 class TestUserModel(TestCase):
     """
     Tests the User model.
+
+    Note: These tests currently do not affect the code coverage metrics, due to django-nose Issue #108.
+    However, they do still provide effective protection against functional regression.
+    See: https://github.com/django-nose/django-nose/issues/180
     """
 
     def setUp(self):
