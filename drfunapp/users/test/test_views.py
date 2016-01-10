@@ -1,3 +1,5 @@
+from collections import OrderedDict
+
 from django.core.urlresolvers import reverse
 from django.forms.models import model_to_dict
 from django.contrib.auth.hashers import check_password
@@ -22,6 +24,15 @@ class TestUserAPI(APITestCase):
     def test_get_request_fails(self):
         response = self.client.get(self.url)
         eq_(response.status_code, 405)
+
+    def test_options_request_succeeds(self):
+        response = self.client.options(self.url)
+        eq_(response.status_code, 200)
+
+    def test_options_request_expected_data(self):
+        response = self.client.options(self.url)
+        expected = OrderedDict([(u'name', u'User List'), (u'description', u'Creates, Updates, and retrieves User accounts'), (u'renders', [u'application/json', u'text/html']), (u'parses', [u'application/json', u'application/x-www-form-urlencoded', u'multipart/form-data']), (u'actions', {u'POST': OrderedDict([('id', OrderedDict([(u'type', u'integer'), (u'required', False), (u'read_only', True), (u'label', u'ID')])), ('username', OrderedDict([(u'type', u'string'), (u'required', False), (u'read_only', True), (u'label', u'Username'), (u'help_text', u'Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only.')])), ('first_name', OrderedDict([(u'type', u'string'), (u'required', False), (u'read_only', False), (u'label', u'First name'), (u'max_length', 30)])), ('last_name', OrderedDict([(u'type', u'string'), (u'required', False), (u'read_only', False), (u'label', u'Last name'), (u'max_length', 30)]))])})])  # noqa
+        eq_(response.data, expected)
 
     def test_post_request_with_no_data_fails(self):
         response = self.client.post(self.url, {})
