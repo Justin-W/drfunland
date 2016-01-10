@@ -19,6 +19,10 @@ class TestUserAPI(APITestCase):
         self.url = reverse('user-list')
         self.user_data = model_to_dict(UserFactory.build())
 
+    def test_get_request_fails(self):
+        response = self.client.get(self.url)
+        eq_(response.status_code, 405)
+
     def test_post_request_with_no_data_fails(self):
         response = self.client.post(self.url, {})
         eq_(response.status_code, 400)
