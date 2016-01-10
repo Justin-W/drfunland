@@ -10,6 +10,7 @@ before_script:
 - psql -c 'CREATE DATABASE "drfunapp";' -U postgres
 install:
   - "pip install -r requirements/test.txt"
+  - "pip install coveralls"
 script:
   - ./drfunapp/manage.py test drfunapp
 after_success:
