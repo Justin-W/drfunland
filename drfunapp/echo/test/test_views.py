@@ -7,7 +7,7 @@ from ..views import echo_root, echo_view
 
 class TestApiRootView(APITestCase):
     """
-    Tests the / endpoint.
+    Tests the echo_root FBV.
     """
 
     def setUp(self):
@@ -51,7 +51,7 @@ class TestApiRootView(APITestCase):
 
 class TestEchoView(APITestCase):
     """
-    Tests the /echo endpoint.
+    Tests the EchoView CBV.
     """
 
     def setUp(self):
