@@ -7,4 +7,5 @@ urlpatterns = [
     url(r'^helloworld', views.hello_world_view, name='helloworld'),
     url(r'^hello', views.hello_world_view, name='hello'),
     url(r'^image', views.httpbin_image, name='httpbin_image'),
+    url(r'^text', views.httpbin_text, name='httpbin_text'),
 ]

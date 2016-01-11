@@ -2,7 +2,7 @@ from django.core.urlresolvers import reverse
 from nose.tools import eq_, ok_
 from rest_framework.test import APITestCase
 
-from ..views import httpbin_root, httpbin_image
+from ..views import httpbin_root, httpbin_image, httpbin_text
 
 
 class TestApiRootView(APITestCase):
@@ -47,6 +47,7 @@ class TestApiRootView(APITestCase):
         eq_(response.status_code, 200)
         ok_("'httpbin_root': 'http://testserver/api/v1/httpbin/'" in repr(response.data))
         ok_("'httpbin_image': 'http://testserver/api/v1/httpbin/image'" in repr(response.data))
+        ok_("'httpbin_text': 'http://testserver/api/v1/httpbin/text'" in repr(response.data))
         ok_("'hello_world_view': ('http://testserver/api/v1/httpbin/helloworld', 'http://testserver/api/v1/httpbin/hello')" in repr(response.data))  # noqa
 
 
@@ -131,5 +132,40 @@ class TestHttpbinImageView(APITestCase):
 
     def test_get_request_with_invalid_data_fails(self):
         for image_type in ('txt', 'xml', 'html', '.'):
+            response = self.client.get(self.url, {'ext': image_type})
+            eq_(response.status_code, 400)
+
+
+class TestHttpbinTextView(APITestCase):
+    """
+    Tests the httpbin_text FBV.
+    """
+
+    def setUp(self):
+        self.url = reverse(httpbin_text)
+
+    def test_get_request_succeeds(self):
+        response = self.client.get(self.url)
+        eq_(response.status_code, 307)
+
+    def test_options_request_succeeds(self):
+        response = self.client.options(self.url)
+        eq_(response.status_code, 200)
+
+    def test_put_request_fails(self):
+        response = self.client.put(self.url)
+        eq_(response.status_code, 405)
+
+    def test_delete_request_fails(self):
+        response = self.client.delete(self.url)
+        eq_(response.status_code, 405)
+
+    def test_get_request_with_valid_data_succeeds(self):
+        for image_type in ('', 'html', 'xml', 'json', 'txt', 'utf8'):
+            response = self.client.get(self.url, {'ext': image_type})
+            eq_(response.status_code, 307)
+
+    def test_get_request_with_invalid_data_fails(self):
+        for image_type in ('gif', 'pdf', 'exe', '.'):
             response = self.client.get(self.url, {'ext': image_type})
             eq_(response.status_code, 400)
