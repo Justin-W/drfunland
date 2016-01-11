@@ -146,7 +146,7 @@ class TestHttpbinTextView(APITestCase):
 
     def test_get_request_succeeds(self):
         response = self.client.get(self.url)
-        eq_(response.status_code, 307)
+        eq_(response.status_code, 200)
 
     def test_options_request_succeeds(self):
         response = self.client.options(self.url)
@@ -163,7 +163,32 @@ class TestHttpbinTextView(APITestCase):
     def test_get_request_with_valid_data_succeeds(self):
         for image_type in ('', 'html', 'xml', 'json', 'txt', 'utf8'):
             response = self.client.get(self.url, {'ext': image_type})
-            eq_(response.status_code, 307)
+            eq_(response.status_code, 200)
+
+    # def test_get_request_expected_data_html(self):
+    #     response = self.client.get(self.url, {'ext': 'html'})
+    #     eq_(response.status_code, 200)
+    #     eq_(response.data, 'abc')
+    #
+    # def test_get_request_expected_data_xml(self):
+    #     response = self.client.get(self.url, {'ext': 'xml'})
+    #     eq_(response.status_code, 200)
+    #     eq_(response.data, 'abc')
+    #
+    # def test_get_request_expected_data_json(self):
+    #     response = self.client.get(self.url, {'ext': 'json'})
+    #     eq_(response.status_code, 200)
+    #     eq_(response.data, 'abc')
+    #
+    # def test_get_request_expected_data_txt(self):
+    #     response = self.client.get(self.url, {'ext': 'txt'})
+    #     eq_(response.status_code, 200)
+    #     eq_(response.data, 'abc')
+    #
+    # def test_get_request_expected_data_utf8(self):
+    #     response = self.client.get(self.url, {'ext': 'utf8'})
+    #     eq_(response.status_code, 200)
+    #     eq_(response.data, 'abc')
 
     def test_get_request_with_invalid_data_fails(self):
         for image_type in ('gif', 'pdf', 'exe', '.'):
