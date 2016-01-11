@@ -12,6 +12,7 @@ class TestEchoView(APITestCase):
 
     def setUp(self):
         self.url = reverse(echo_view)
+        # self.url = reverse('echo')
         self.test_data_in = {'string': 'abc', 'number': 123, 'bool': True, 'list': ['a', 2, 'c']}
 
     def test_get_request_succeeds(self):
@@ -21,6 +22,14 @@ class TestEchoView(APITestCase):
     def test_options_request_succeeds(self):
         response = self.client.options(self.url)
         eq_(response.status_code, 200)
+
+    def test_put_request_fails(self):
+        response = self.client.put(self.url)
+        eq_(response.status_code, 405)
+
+    def test_delete_request_fails(self):
+        response = self.client.delete(self.url)
+        eq_(response.status_code, 405)
 
     def test_post_request_with_no_data_succeeds(self):
         response = self.client.post(self.url, {})
@@ -38,7 +47,7 @@ class TestEchoView(APITestCase):
         response = self.client.get(self.url, data=self.test_data_in)
         eq_(response.status_code, 200)
         expected = _encode_request_data(self.test_data_in)
-        eq_(_qdict_to_dict(response.data), expected)
+        eq_(_decode_response_data(response), expected)
 
     def test_post_request_expected_data(self):
         response = self.client.post(self.url, data=self.test_data_in)
@@ -48,10 +57,14 @@ class TestEchoView(APITestCase):
 
 
 def _decode_response_data(response):
-    # return response.data
-    return _qdict_to_dict(response.data)
-    # return _byteify(response.data)
-    # return _byteify(_qdict_to_dict(response.data))
+    if response is None:
+        return None
+
+    data = response.data
+    if type(data) is dict:
+        return data
+
+    return _qdict_to_dict(data)
 
 
 def _encode_request_data(obj):
@@ -67,7 +80,11 @@ def _qdict_to_dict(qdict):
     Single-value fields are put in directly, and for multi-value fields, a list
     of all values is stored at the field's key.
     """
-    return {k: v[0] if len(v) == 1 else v for k, v in qdict.lists()}
+    # assert isinstance(qdict, (django.http.QueryDict, django.http.request.QueryDict))
+    try:
+        return {k: v[0] if len(v) == 1 else v for k, v in qdict.lists()}
+    except AttributeError:
+        return qdict
 
 
 def _unicodeify(obj):
