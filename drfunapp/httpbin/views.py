@@ -77,7 +77,6 @@ def httpbin_text(request):
     text_format = str(text_format).lower()
     if text_format in ('html', 'xml'):
         url = 'http://httpbin.org/{format}'.format(format=text_format)
-        return _redirect(url)
     elif text_format == 'json':
         url = 'http://httpbin.org/get'
     elif text_format == 'txt':
