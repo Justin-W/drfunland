@@ -2,7 +2,51 @@ from django.core.urlresolvers import reverse
 from nose.tools import eq_
 from rest_framework.test import APITestCase
 
-from ..views import echo_view
+from ..views import echo_root, echo_view
+
+
+class TestApiRootView(APITestCase):
+    """
+    Tests the / endpoint.
+    """
+
+    def setUp(self):
+        self.url = reverse(echo_root)
+        self.test_data_in = {'string': 'abc', 'number': 123, 'bool': True, 'list': ['a', 2, 'c']}
+
+    def test_get_request_succeeds(self):
+        response = self.client.get(self.url)
+        eq_(response.status_code, 200)
+
+    def test_options_request_succeeds(self):
+        response = self.client.options(self.url)
+        eq_(response.status_code, 200)
+
+    def test_put_request_fails(self):
+        response = self.client.put(self.url)
+        eq_(response.status_code, 405)
+
+    def test_delete_request_fails(self):
+        response = self.client.delete(self.url)
+        eq_(response.status_code, 405)
+
+    def test_post_request_with_no_data_fails(self):
+        response = self.client.post(self.url, {})
+        eq_(response.status_code, 405)
+
+    def test_get_request_with_valid_data_succeeds(self):
+        response = self.client.get(self.url, self.test_data_in)
+        eq_(response.status_code, 200)
+
+    def test_post_request_with_valid_data_fails(self):
+        response = self.client.post(self.url, self.test_data_in)
+        eq_(response.status_code, 405)
+
+    def test_get_request_expected_data(self):
+        response = self.client.get(self.url, data=self.test_data_in)
+        eq_(response.status_code, 200)
+        eq_(repr(response.data),
+            "{'echo_root': 'http://testserver/api/v1/echo/', 'EchoView': 'http://testserver/api/v1/echo/echo'}")  # noqa
 
 
 class TestEchoView(APITestCase):
