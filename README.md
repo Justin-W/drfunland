@@ -50,29 +50,33 @@ pip install -r requirements/local.txt
 ```
 
 ### Create the database:
-
+Note: Make sure your postgresql server is installed and running. e.g.:
 ```bash
-#Note: make sure your postgresql server is installed and running. e.g.:
-#postgres -D /usr/local/var/postgres
+postgres -D /usr/local/var/postgres
+```
 
-#cd ${REPO_PATH}
+Then create the app's (empty) DB:
+```bash
 createdb drfunapp
 ```
 
 ### Initialize the git repository
-
+Note: This is only necessary when creating a new git repo, not if you are cloning an existing one.
 ```
 cd ${REPO_PATH}
 git init
 git remote add origin git@github.com:Justin-W/drfunland.git
 ```
 
-### Migrate, create a superuser, and run the server:
+### Migrate the DB, create a superuser, and run the server:
 ```bash
 cd ${REPO_PATH}
 source ${VENV_PATH}/bin/activate
+#apply DB migrations
 python drfunapp/manage.py migrate
+#insert a superuser in the DB
 python drfunapp/manage.py createsuperuser
+#run the server
 python drfunapp/manage.py runserver
 ```
 
