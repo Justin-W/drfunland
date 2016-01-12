@@ -36,6 +36,8 @@ virtualenv env
 source env/bin/activate
 
 #e.g.:
+cd ~/pyenvs/
+virtualenv -p python drfunlandenv
 source ${VENV_PATH}/bin/activate
 ```
 
