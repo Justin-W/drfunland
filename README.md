@@ -16,8 +16,13 @@ Note: The following are only needed if you plan on deploying to heroku.
 
 # Project initialization
 
-## CLI environment variables
-Note: The subsequent examples all assume the following paths are set correctly as environment variables:
+### CLI initialization/usage notes
+Notes:
+- The subsequent examples assume you are running the app on a Mac (OS X).
+Minor alterations may be needed for use on Windows or Linux.
+- The subsequent examples all assume the following paths are set correctly as environment variables.
+However, these env variables are not required by the app itself, they are merely intended to make the CLI examples
+in this readme more easily customizable.
 ```bash
 REPO_PATH=~/dev/github/Justin-W/drfunland/drfunland
 VENV_PATH=~/pyenvs/drfunlandenv
