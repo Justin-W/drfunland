@@ -75,9 +75,10 @@ python drfunapp/manage.py runserver
 ```
 
 ## Heroku-related one-time setup
+Note: you'll need to uncomment the "#deploy:" section of the '.travis.yml' file to enable automatic Heroku deployment.
 
 ### Create Servers
-By default the included fabfile will setup three environments:
+By default the included fabfile will setup three environments (as separate git remotes):
 
 - dev -- The bleeding edge of development
 - qa -- For quality assurance testing
