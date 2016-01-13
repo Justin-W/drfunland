@@ -6,7 +6,7 @@
     <option name="PARENT_ENVS" value="true" />
     <option name="SCRIPT_NAME" value="venv.freeze.sh" />
     <option name="PARAMETERS" value="" />
-    <module name="oculusarc" />
+    <module name="drfunland" />
     <envs />
     <method>
       <option name="Make" enabled="false" />
