@@ -21,6 +21,7 @@ Notes:
 - Bash scripts for many common operations are located in the /scripts/ folder under the project root.
 All of them are designed to be run from the directory they are located in.
 - The /scripts/init.sh file can be modified to customize the location and name of the virtualenv.
+- Warning: If you didn't install the prerequisites above, some of the scripts and run configurations may throw cryptic errors.
 - IntelliJ Shared Run Configurations are also available for many of those Bash scripts.
 - The examples and Bash scripts were created for Mac (OS X) development.
 Alterations or equivalent implementations may be needed for use on Windows or Linux.
