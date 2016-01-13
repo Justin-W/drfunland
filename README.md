@@ -18,39 +18,38 @@ Note: The following are only needed if you plan on deploying to heroku.
 
 ### CLI initialization/usage notes
 Notes:
-- The subsequent examples assume you are running the app on a Mac (OS X).
-Minor alterations may be needed for use on Windows or Linux.
+- Bash scripts for many common operations are located in the /scripts/ folder under the project root.
+All of them are designed to be run from the directory they are located in.
+- The /scripts/init.sh file can be modified to customize the location and name of the virtualenv.
+- IntelliJ Shared Run Configurations are also available for many of those Bash scripts.
+- The examples and Bash scripts were created for Mac (OS X) development.
+Alterations or equivalent implementations may be needed for use on Windows or Linux.
 - The subsequent examples all assume the following paths are set correctly as environment variables.
 However, these env variables are not required by the app itself, they are merely intended to make the CLI examples
 in this readme more easily customizable.
 ```bash
 REPO_PATH=~/dev/github/Justin-W/drfunland/drfunland
-VENV_PATH=~/pyenvs/drfunlandenv
+SCRIPTS_PATH=${REPO_PATH}/scripts
 ```
 
 ## One-time setup
-Create and activate a virtualenv:
+Create and configure a virtualenv:
 
 ```bash
-virtualenv env
-source env/bin/activate
-
-#e.g.:
-cd ~/pyenvs/
-virtualenv -p python drfunlandenv
-source ${VENV_PATH}/bin/activate
+cd ${SCRIPTS_PATH}
+bash venv.update.sh
 ```
 
-### Install dependencies:
+### Install/update dependencies:
 
 ```bash
-source ${VENV_PATH}/bin/activate
-cd ${REPO_PATH}
-pip install -r requirements/local.txt
+cd ${SCRIPTS_PATH}
+bash venv.update.sh
 ```
 
 ### Create the database:
 Note: Make sure your postgresql server is installed and running. e.g.:
+
 ```bash
 postgres -D /usr/local/var/postgres
 ```
@@ -70,12 +69,17 @@ git remote add origin git@github.com:Justin-W/drfunland.git
 
 ### Migrate the DB, create a superuser, and run the server:
 ```bash
+cd ${SCRIPTS_PATH} && source venv.activate.sh
+#or: source ${VENV_PATH}/bin/activate
+
 cd ${REPO_PATH}
-source ${VENV_PATH}/bin/activate
+
 #apply DB migrations
 python drfunapp/manage.py migrate
+
 #insert a superuser in the DB
 python drfunapp/manage.py createsuperuser
+
 #run the server
 python drfunapp/manage.py runserver
 ```
@@ -110,24 +114,16 @@ travis encrypt $(heroku auth:token) --add deploy.api_key
 Run the project's test suite:
 
 ```bash
-cd ${REPO_PATH}
-source ${VENV_PATH}/bin/activate
-fab test
-#or use the test.sh convenience script
+cd ${SCRIPTS_PATH}
+bash fab.test.sh
 ```
 
 ### Run the server
 Start the project's server:
 
 ```bash
-cd ${REPO_PATH}
-source ${VENV_PATH}/bin/activate
-fab serve
-#or: python drfunapp/manage.py runserver
-
-#once running, access the app at:
-open http://127.0.0.1:8000/api/v1/
-open http://127.0.0.1:8000/admin/
+cd ${SCRIPTS_PATH}
+bash fab.serve.sh
 ```
 
 ### Browse the app
