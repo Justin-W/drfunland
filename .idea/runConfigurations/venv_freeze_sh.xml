@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="venv.freeze.sh" type="BashConfigurationType" factoryName="Bash" folderName="DrFun Venv" singleton="true">
+  <configuration default="false" name="venv.freeze.sh" type="BashConfigurationType" factoryName="Bash" folderName="virtualenv scripts" singleton="true">
     <option name="INTERPRETER_OPTIONS" value="" />
     <option name="INTERPRETER_PATH" value="/bin/bash" />
     <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/scripts" />

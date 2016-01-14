@@ -1,10 +1,10 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="venv.delete.sh" type="BashConfigurationType" factoryName="Bash" folderName="virtualenv scripts" singleton="true">
+  <configuration default="false" name="status: pip freeze" type="BashConfigurationType" factoryName="Bash" singleton="true">
     <option name="INTERPRETER_OPTIONS" value="" />
     <option name="INTERPRETER_PATH" value="/bin/bash" />
     <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/scripts" />
     <option name="PARENT_ENVS" value="true" />
-    <option name="SCRIPT_NAME" value="venv.delete.sh" />
+    <option name="SCRIPT_NAME" value="venv.freeze.sh" />
     <option name="PARAMETERS" value="" />
     <module name="drfunland" />
     <envs />
