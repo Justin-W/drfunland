@@ -14,8 +14,8 @@ def httpbin_root(request, format=None):
         'httpbin_root': reverse('httpbin_root', request=request, format=format),
         'httpbin_image': reverse(httpbin_image, request=request, format=format),
         'httpbin_text': reverse(httpbin_text, request=request, format=format),
-        'hello_world_view': (reverse('helloworld', request=request, format=format),
-                             reverse('hello', request=request, format=format))
+        'hello_world_view': (reverse('httpbin_helloworld', request=request, format=format),
+                             reverse('httpbin_hello', request=request, format=format))
     })
 
 

@@ -57,7 +57,7 @@ class TestHelloWorldView(APITestCase):
     """
 
     def setUp(self):
-        self.url = reverse('helloworld')
+        self.url = reverse('httpbin_helloworld')
         self.test_data_in = {'string': 'abc', 'number': 123, 'bool': True, 'list': ['a', 2, 'c']}
 
     def test_get_request_succeeds(self):
