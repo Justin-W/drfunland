@@ -86,10 +86,11 @@ def transitionsfsm_machines_pk_blueprint(request, pk):
 
 @api_view(('GET',))
 @permission_classes((AllowAny,))
-def transitionsfsm_machines_pk_graph(request, pk):
+def transitionsfsm_machines_pk_graph(request, pk, ext=None):
     if request.method == 'GET':
         m = _machine_catalog.get(pk)
-        return generate_image_response(m, title=pk, image_format='png')
+        image_format = str(ext or '').lower()
+        return generate_image_response(m, title=pk, image_format=image_format)
     elif request.method == 'POST':
         pass
 
@@ -119,6 +120,7 @@ def get_machine_detail_urls(machine_name, request):
     return [
         ('detail', reverse('transitionsfsm_machines_pk', request=request, args=(machine_name,))),
         ('graph', reverse('transitionsfsm_machines_pk_graph', request=request, args=(machine_name,))),
+        ('graph (jpeg)', reverse('transitionsfsm_machines_pk_graph', request=request, args=(machine_name, '.jpeg'))),
         ('blueprint', reverse('transitionsfsm_machines_pk_blueprint', request=request, args=(machine_name,))),
         # ('transition', reverse('transitionsfsm_machines_pk_transition', request=request, args=(machine_name,))),
     ]
