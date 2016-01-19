@@ -50,9 +50,9 @@ class TestApiRootView(APITestCase):
         response_data = repr(response.data)
         ok_("'transitionsfsm_root': 'http://testserver/api/v1/transitionsfsm/'" in response_data)
         ok_("'transitionsfsm_root': 'http://testserver/api/v1/transitionsfsm/'" in response_data)
-        ok_("'transitionsfsm_machines_pk_graph': 'http://testserver/api/v1/transitionsfsm/machines/matter/graph'" in response_data)  # noqa
-        ok_("'transitionsfsm_machines_pk_transition': 'http://testserver/api/v1/transitionsfsm/machines/matter/transition'" in response_data)  # noqa
-        ok_("'transitionsfsm_machines_pk_blueprint': 'http://testserver/api/v1/transitionsfsm/machines/matter/blueprint'" in response_data)  # noqa
+        ok_("'transitionsfsm_machines_pk_graph': 'http://testserver/api/v1/transitionsfsm/machines/matter/graph/'" in response_data)  # noqa
+        ok_("'transitionsfsm_machines_pk_transition': 'http://testserver/api/v1/transitionsfsm/machines/matter/transition/'" in response_data)  # noqa
+        ok_("'transitionsfsm_machines_pk_blueprint': 'http://testserver/api/v1/transitionsfsm/machines/matter/blueprint/'" in response_data)  # noqa
         ok_("'transitionsfsm_machines_root': 'http://testserver/api/v1/transitionsfsm/machines/'" in response_data)
         ok_("'transitionsfsm_machines_pk': 'http://testserver/api/v1/transitionsfsm/machines/matter/'" in response_data)  # noqa
 
