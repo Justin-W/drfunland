@@ -36,13 +36,26 @@ def transitionsfsm_root(request, format=None):
 @permission_classes((AllowAny,))
 def transitionsfsm_machines_root(request):
     if request.method == 'GET':
-        # data = {k: summarize_machine(m, machine_name=k, request=request) for k, m in _machine_catalog.items()}
-        data = {k: dict(get_machine_detail_urls(machine_name=k, request=request)) for k, m in _machine_catalog.items()}
+        data = get_machine_list(request)
         return Response(data)
     elif request.method == 'POST':
         pass
 
     return Response('Not yet implemented')
+
+
+def get_machine_list(request):
+    mc = _machine_catalog
+    # data = {k: summarize_machine(m, machine_name=k, request=request) for k, m in mc.items()}
+    # data = {k: dict(get_machine_detail_urls(machine_name=k, request=request)) for k, m in mc.items()}
+    # data = [(k, dict(get_machine_detail_urls(machine_name=k, request=request))) for k, m in mc.items()]
+    # data = [{k: dict(get_machine_detail_urls(machine_name=k, request=request))} for k, m in mc.items()]
+    # data = tuple([(k, dict(get_machine_detail_urls(machine_name=k, request=request))) for k, m in mc.items()])
+    keys = sorted(mc.keys())
+    # pairs = [(k, mc[k]) for k in keys]
+    # data = [{k: dict(get_machine_detail_urls(machine_name=k, request=request))} for k in keys]
+    data = [{'id': k, 'urls': dict(get_machine_detail_urls(machine_name=k, request=request))} for k in keys]
+    return data
 
 
 @api_view(('GET',))
