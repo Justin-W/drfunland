@@ -19,6 +19,12 @@ class MachineCatalog(dict):
         self['nested'] = self.create_sample_machine_nested(**kwargs)
         self['reuse'] = self.create_sample_machine_reuse(**kwargs)
         self['terms'] = self.create_sample_machine_terms(**kwargs)
+        self['traffic3a'] = self.create_sample_machine_traffic_light_3state_1(**kwargs)
+        self['traffic4a'] = self.create_sample_machine_traffic_light_4state_1(**kwargs)
+        self['traffic4b'] = self.create_sample_machine_traffic_light_4state_2(**kwargs)
+        self['traffic5a'] = self.create_sample_machine_traffic_light_2state3nested_1(**kwargs)
+        self['traffic6a'] = self.create_sample_machine_traffic_light_2state4nested_1(**kwargs)
+        # self['traffic'] = self.create_sample_machine_traffic_light_(**kwargs)
 
     def create_sample_machine(self, name=None, **kwargs):
         if not name or name in ('a', 'terms'):
@@ -180,6 +186,64 @@ class MachineCatalog(dict):
 
         return collector
 
+    def create_sample_machine_traffic_light_3state_1(self, **kwargs):
+        states = ['green', 'yellow', 'red']
+        order = ['green', 'yellow', 'red', 'green']
+        m = Machine(states=states, initial='red', **kwargs)
+        m.add_ordered_transitions(order)
+        return m
+
+    def create_sample_machine_traffic_light_4state_1(self, **kwargs):
+        states = ['green', 'yellow', 'red', 'off']
+        order = ['off', 'red', 'green', 'yellow', 'red']
+        m = Machine(states=states, initial='red', **kwargs)
+        m.add_ordered_transitions(order)
+        return m
+
+    def create_sample_machine_traffic_light_4state_2(self, **kwargs):
+        transitions = [
+            ['turned_on', 'off', 'red'],
+            ['commence_shutdown', 'green', 'yellow'],
+            ['poweroutage', '*', 'off']
+        ]
+        m = self.create_sample_machine_traffic_light_4state_1(transitions=transitions, **kwargs)
+        return m
+
+    def create_sample_machine_traffic_light_2state3nested_1(self, **kwargs):
+        states = ['off', {'name': 'on', 'children': ['green', 'yellow', 'red']}]
+        order = ['off', 'on_red', 'on_green', 'on_yellow', 'on_red']
+        transitions = [
+            ['turned_on', 'off', 'on_red'],
+            ['commence_shutdown', 'on_green', 'on_yellow'],
+            ['poweroutage', '*', 'off']
+        ]
+        m = Machine(states=states, transitions=transitions, initial='off', **kwargs)
+        m.add_ordered_transitions(order)
+        return m
+
+    def create_sample_machine_traffic_light_2state4nested_1(self, **kwargs):
+        states = [{'name': 'unlit', 'children': ['off', 'blank']}, {'name': 'lit', 'children': ['green', 'yellow', 'red']}]
+        order = ['unlit_off', 'unlit_blank', 'lit_red', 'lit_green', 'lit_yellow', 'lit_red']
+        transitions = [
+            ['turned_on', 'unlit_off', 'unlit_blank'],
+            ['commence_shutdown', 'lit_green', 'lit_yellow'],
+            ['power_outage', '*', 'unlit_off']
+        ]
+        m = Machine(states=states, transitions=transitions, initial='unlit_off', **kwargs)
+        m.add_ordered_transitions(order)
+        return m
+
+    def create_sample_machine_traffic_light_zzz(self, **kwargs):
+        states = ['green', 'yellow', 'red', 'off']
+        transitions = [
+            ['poweroutage', '*', 'off'],
+            ['commence_shutdown', 'green', 'yellow'],
+            ['timer', 'liquid', 'gas'],
+            ['sublimate', 'solid', 'gas'],
+            ['ionize', 'gas', 'plasma']
+        ]
+        m = Machine(states=states, transitions=transitions, initial='off', **kwargs)
+        return m
 
 def filter_none_values(d):
     """
