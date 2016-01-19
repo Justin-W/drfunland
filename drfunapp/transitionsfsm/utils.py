@@ -1,4 +1,5 @@
-from transitions import Machine
+# from transitions import Machine
+from transitions import HierarchicalMachine as Machine
 
 
 # from transitions import HierarchicalMachine as Machine
@@ -135,7 +136,7 @@ class MachineCatalog(dict):
         return machine
 
     def create_sample_machine_nested(self, **kwargs):
-        from transitions import HierarchicalMachine as Machine
+        # from transitions import HierarchicalMachine as Machine
         # from transitions import NestedState as State
 
         states = ['standing', 'walking', {'name': 'caffeinated', 'children': ['dithering', 'running']}]
@@ -151,7 +152,7 @@ class MachineCatalog(dict):
         return machine
 
     def create_sample_machine_reuse(self, **kwargs):
-        from transitions import HierarchicalMachine as Machine
+        # from transitions import HierarchicalMachine as Machine
         # from transitions import NestedState as State
 
         count_states = ['1', '2', '3', 'done']
@@ -242,7 +243,7 @@ def summarize_transition(t, trigger):
     return filter_none_values({'source': t.source, 'dest': t.dest, 'trigger': trigger})
 
 
-def graph_machine(machine, image_format=None, layout_program=None):
+def graph_machine(machine, title=None, image_format=None, layout_program=None):
     """
     Generates an image of the graph of a FSM Machine.
 
@@ -257,9 +258,9 @@ def graph_machine(machine, image_format=None, layout_program=None):
     layout_program = layout_program or 'neato'
     image_format = image_format or 'png'
 
-    graph = machine.get_graph()
+    graph = machine.get_graph(title=title)
     # graph.layout()  # layout with default (neato)
-    graph.layout(prog=layout_program)  # layout with default (neato)
+    # graph.layout(prog=layout_program)
     # graph.draw('my_state_diagram.png', prog='dot')
-    image = graph.draw(format=image_format)
+    image = graph.draw(format=image_format, prog=layout_program)
     return image
