@@ -328,3 +328,17 @@ def graph_machine(machine, title=None, image_format=None, layout_program=None):
     # graph.draw('my_state_diagram.png', prog='dot')
     image = graph.draw(format=image_format, prog=layout_program)
     return image
+
+
+def get_machine_dot(machine, title=None, layout_program=None):
+    """
+    Gets the 'DOT' source code for the graph of a FSM Machine.
+
+    :param machine: The <transitions.Machine> to generate a graph image of.
+    :param layout_program: The graphviz layout program to use.
+        Possible values include: 'neato', 'dot', 'twopi', 'circo', 'fdp', 'nop', 'wc', 'acyclic', 'gvpr', 'gvcolor',
+        'ccomps', 'sccmap', 'tred', 'sfdp'..
+    :return:
+    """
+    layout_program = layout_program or 'dot'
+    return graph_machine(machine=machine, title=title, layout_program=layout_program, image_format='dot')
