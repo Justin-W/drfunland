@@ -89,7 +89,7 @@ def transitionsfsm_machines_pk_blueprint(request, pk):
 def transitionsfsm_machines_pk_graph(request, pk):
     if request.method == 'GET':
         m = _machine_catalog.get(pk)
-        return generate_image_response_png(m)
+        return generate_image_response(m, title=pk, image_format='png')
     elif request.method == 'POST':
         pass
 
@@ -124,8 +124,9 @@ def get_machine_detail_urls(machine_name, request):
     ]
 
 
-def generate_image_response_png(machine):
+def generate_image_response(machine, title=None, image_format=None):
     from django.http import HttpResponse as DjangoHttpResponse
 
-    png = utils.graph_machine(machine, image_format='png', layout_program='dot')
-    return DjangoHttpResponse(png, content_type='image/png')
+    image_format = image_format or 'png'
+    img = utils.graph_machine(machine, title=title, image_format=image_format, layout_program='dot')
+    return DjangoHttpResponse(img, content_type='image/{}'.format(image_format))
