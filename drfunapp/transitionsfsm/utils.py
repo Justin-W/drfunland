@@ -1,8 +1,6 @@
 # from transitions import Machine
-from transitions import HierarchicalMachine as Machine
-
-
 # from transitions import HierarchicalMachine as Machine
+from transitions_monkey_patches import Machine as Machine
 
 
 class MachineCatalog(dict):
@@ -342,3 +340,9 @@ def get_machine_dot(machine, title=None, layout_program=None):
     """
     layout_program = layout_program or 'dot'
     return graph_machine(machine=machine, title=title, layout_program=layout_program, image_format='dot')
+    # layout_program = layout_program or 'dot'
+    #
+    # graph = machine.get_graph(title=title, diagram_class=BetterFSMGraph)
+    # # graph.layout()  # layout with default (neato)
+    # graph.layout(prog=layout_program)
+    # return graph.to_dot()
