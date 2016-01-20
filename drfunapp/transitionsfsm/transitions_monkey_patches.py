@@ -65,7 +65,10 @@ class Machine(OldMachine):
         super(Machine, self).__init__(*args, **kwargs)
 
     def __str__(self):
-        return str(summarize_machine(self))
+        return str(self.summarize())
+
+    def summarize(self):
+        return summarize_machine(self)
 
     def get_graph(self, title=None, diagram_class=BetterFSMGraph):
         return super(Machine, self).get_graph(title, diagram_class)

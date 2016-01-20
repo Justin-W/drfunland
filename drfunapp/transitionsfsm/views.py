@@ -112,7 +112,8 @@ def transitionsfsm_machines_pk_transition(request, pk):
 
 def summarize_machine(m, machine_name, request):
     d = {'_URLS': get_machine_detail_urls(machine_name, request)}
-    d.update(utils.summarize_machine(m))
+    # d.update(utils.summarize_machine(m))
+    d.update(m.summarize())
     return d
 
 

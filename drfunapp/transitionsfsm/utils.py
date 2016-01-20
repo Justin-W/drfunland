@@ -299,68 +299,6 @@ class MimeUtils(object):
         return 'text/plain'
 
 
-def filter_none_values(d):
-    """
-    Filters any keys with None values out of a dict.
-
-    :param d: a dict
-    :return: a dict comprehension
-    """
-    return {k: v for k, v in d.items() if v is not None}
-
-
-def summarize_machine(m):
-    """
-    Generates a text representation of a FSM Machine.
-
-    :param m: The <transitions.Machine> to summarize.
-    """
-    try:
-        blueprints = m.blueprints
-    except AttributeError:
-        blueprints = None
-        # blueprints = dir(m)
-    states = [summarize_state(s) for s in m.states]
-    events = [summarize_event(e) for e in m.events]
-    return filter_none_values({'blueprints': blueprints, 'states': states, 'events': events})
-    # return filter_none_values({'states': states, 'events': events})
-
-
-def summarize_state(s):
-    """
-    Generates a text representation of a State.
-
-    :param s: The <transitions.State> to summarize.
-    """
-    try:
-        return filter_none_values({'name': s.name, 'on_enter': str(s.on_enter), 'on_exit': str(s.on_exit)})
-    except AttributeError:
-        return str(s)
-
-
-def summarize_event(e):
-    """
-    Generates a text representation of a Event.
-
-    :param e: The <transitions.Event> to summarize.
-    """
-    try:
-        transitions = [summarize_transition(t, e.name) for t in e.transitions if t]
-        return filter_none_values({'name': e.name, 'transitions': transitions})
-    except AttributeError:
-        return str(e)
-
-
-def summarize_transition(t, trigger):
-    """
-    Generates a text representation of a Transition.
-
-    :param t: The <transitions.Transition> to summarize.
-    :param trigger: The trigger of the transition.
-    """
-    return filter_none_values({'source': t.source, 'dest': t.dest, 'trigger': trigger})
-
-
 def graph_machine(machine, title=None, image_format=None, layout_program=None):
     """
     Generates an image of the graph of a FSM Machine.
