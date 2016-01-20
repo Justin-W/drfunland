@@ -22,7 +22,9 @@ class MachineCatalog(dict):
         self['traffic4a'] = self.create_sample_machine_traffic_light_4state_1(**kwargs)
         self['traffic4b'] = self.create_sample_machine_traffic_light_4state_2(**kwargs)
         self['traffic5a'] = self.create_sample_machine_traffic_light_2state3nested_1(**kwargs)
+        self['traffic5b'] = self.create_sample_machine_traffic_light_2state3nested_2(**kwargs)
         self['traffic6a'] = self.create_sample_machine_traffic_light_2state4nested_1(**kwargs)
+        self['traffic6b'] = self.create_sample_machine_traffic_light_2state4nested_2(**kwargs)
         # self['traffic'] = self.create_sample_machine_traffic_light_(**kwargs)
 
     def create_sample_machine(self, name=None, **kwargs):
@@ -209,11 +211,31 @@ class MachineCatalog(dict):
         return m
 
     def create_sample_machine_traffic_light_2state3nested_1(self, **kwargs):
-        states = ['off', {'name': 'on', 'children': ['green', 'yellow', 'red']}]
-        order = ['off', 'on_red', 'on_green', 'on_yellow', 'on_red']
+        states = ['off', {'name': 'lit', 'children': ['green', 'yellow', 'red']}]
+        order = ['off', 'lit_red', 'lit_green', 'lit_yellow', 'lit_red']
         transitions = [
-            ['turned_on', 'off', 'on_red'],
-            ['commence_shutdown', 'on_green', 'on_yellow'],
+            ['turned_on', 'off', 'lit_red'],
+            ['commence_shutdown', 'lit_green', 'lit_yellow'],
+            ['poweroutage', '*', 'off']
+        ]
+        m = Machine(states=states, transitions=transitions, initial='off', **kwargs)
+        m.add_ordered_transitions(order)
+        return m
+
+    def create_sample_machine_traffic_light_2state3nested_2(self, **kwargs):
+        states = ['off', {'name': 'lit', 'children': ['green', 'yellow', 'red']}]
+        order = ['off', 'lit_red', 'lit_green', 'lit_yellow', 'lit_red']
+        transitions = [
+            ['turned_on', 'off', 'lit_red'],
+            ['commence_shutdown', 'lit_green', 'lit_yellow'],
+            # ['flash_on', 'off', ['lit_green', 'lit_yellow', 'lit_red']],
+            ['flash_on_g', 'off', 'lit_green'],
+            ['flash_on_y', 'off', 'lit_yellow'],
+            ['flash_on_r', 'off', 'lit_red'],
+            # ['flash_off', ['lit_green', 'lit_yellow', 'lit_red'], 'off'],
+            ['flash_off_g', 'lit_green', 'off'],
+            ['flash_off_y', 'lit_yellow', 'off'],
+            ['flash_off_r', 'lit_red', 'off'],
             ['poweroutage', '*', 'off']
         ]
         m = Machine(states=states, transitions=transitions, initial='off', **kwargs)
@@ -232,16 +254,24 @@ class MachineCatalog(dict):
         m.add_ordered_transitions(order)
         return m
 
-    def create_sample_machine_traffic_light_zzz(self, **kwargs):
-        states = ['green', 'yellow', 'red', 'off']
+    def create_sample_machine_traffic_light_2state4nested_2(self, **kwargs):
+        states = [{'name': 'unlit', 'children': ['off', 'blank']}, {'name': 'lit', 'children': ['green', 'yellow', 'red']}]
+        order = ['unlit_off', 'unlit_blank', 'lit_red', 'lit_green', 'lit_yellow', 'lit_red']
         transitions = [
-            ['poweroutage', '*', 'off'],
-            ['commence_shutdown', 'green', 'yellow'],
-            ['timer', 'liquid', 'gas'],
-            ['sublimate', 'solid', 'gas'],
-            ['ionize', 'gas', 'plasma']
+            ['turned_on', 'unlit_off', 'unlit_blank'],
+            # ['flash_on', 'unlit_blank', ['lit_green', 'lit_yellow', 'lit_red']],
+            ['flash_on_g', 'unlit_blank', 'lit_green'],
+            ['flash_on_y', 'unlit_blank', 'lit_yellow'],
+            ['flash_on_r', 'unlit_blank', 'lit_red'],
+            # ['flash_off', ['lit_green', 'lit_yellow', 'lit_red'], 'unlit_blank'],
+            ['flash_off_g', 'lit_green', 'unlit_blank'],
+            ['flash_off_y', 'lit_yellow', 'unlit_blank'],
+            ['flash_off_r', 'lit_red', 'unlit_blank'],
+            ['commence_shutdown', 'lit_green', 'lit_yellow'],
+            ['power_outage', '*', 'unlit_off']
         ]
-        m = Machine(states=states, transitions=transitions, initial='off', **kwargs)
+        m = Machine(states=states, transitions=transitions, initial='unlit_off', **kwargs)
+        m.add_ordered_transitions(order)
         return m
 
 
