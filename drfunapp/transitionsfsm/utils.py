@@ -1,6 +1,7 @@
 # from transitions import Machine
 # from transitions import HierarchicalMachine as Machine
 from transitions_monkey_patches import Machine as Machine
+from mimetypes import MimeTypes
 
 
 class MachineCatalog(dict):
@@ -242,6 +243,26 @@ class MachineCatalog(dict):
         ]
         m = Machine(states=states, transitions=transitions, initial='off', **kwargs)
         return m
+
+
+class MimeUtils(object):
+    _mime_types = MimeTypes()
+
+    # def __init__(self):
+    #     pass
+
+    @classmethod
+    def get_mime_type(cls, ext, strict=True):
+        if not ext:
+            raise ValueError('Invalid value: ext.')
+
+        ext = str(ext).lower()
+        content_type = cls._mime_types.types_map[strict].get('.{}'.format(ext))
+        if content_type:
+            return content_type
+
+        return 'text/plain'
+
 
 def filter_none_values(d):
     """
