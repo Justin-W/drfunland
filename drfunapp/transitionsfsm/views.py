@@ -140,11 +140,7 @@ def create_graphviz_graph_response(machine, title=None, image_format=None):
 
     image_format = image_format or 'png'
     data = utils.graph_machine(machine, title=title, image_format=image_format, layout_program='dot')
-    if image_format == 'dot':
-        # this is a special case since the DOT extension is normally mapped to 'application/msword'
-        content_type = 'text/plain'
-    else:
-        content_type = utils.MimeUtils.get_mime_type(image_format)
+    content_type = utils.MimeUtils.get_mime_type(image_format)
 
     if content_type == 'text/plain':
         # return Response(data)

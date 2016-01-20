@@ -275,11 +275,16 @@ class MachineCatalog(dict):
         return m
 
 
-class MimeUtils(object):
-    _mime_types = MimeTypes()
+def _init_mimeutils_mime_types():
+    obj = MimeTypes()
+    # this is a special case since the DOT extension is normally mapped to 'application/msword'
+    obj.add_type('text/plain', '.dot', True)
+    # obj.add_type('text/plain', '.dot', False)
+    return obj
 
-    # def __init__(self):
-    #     pass
+
+class MimeUtils(object):
+    _mime_types = _init_mimeutils_mime_types()
 
     @classmethod
     def get_mime_type(cls, ext, strict=True):
