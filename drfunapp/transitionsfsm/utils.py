@@ -25,25 +25,24 @@ class MachineCatalog(dict):
         self['traffic5b'] = self.create_sample_machine_traffic_light_2state3nested_2(**kwargs)
         self['traffic6a'] = self.create_sample_machine_traffic_light_2state4nested_1(**kwargs)
         self['traffic6b'] = self.create_sample_machine_traffic_light_2state4nested_2(**kwargs)
-        # self['traffic'] = self.create_sample_machine_traffic_light_(**kwargs)
 
-    def create_sample_machine(self, name=None, **kwargs):
-        if not name or name in ('a', 'terms'):
-            return self.create_sample_machine_terms(**kwargs)
-        elif name in ('b', 'ordered'):
-            return self.create_sample_machine_ordered(**kwargs)
-        elif name in ('b', 'ordered2'):
-            return self.create_sample_machine_ordered2(**kwargs)
-        elif name in ('c', 'matter'):
-            return self.create_sample_machine_matter(**kwargs)
-        elif name in ('c2', 'matter2'):
-            return self.create_sample_machine_matter2(**kwargs)
-        elif name in ('c3', 'matter3'):
-            return self.create_sample_machine_matter3(**kwargs)
-        elif name in ('d', 'nested'):
-            return self.create_sample_machine_nested(**kwargs)
-        elif name in ('e', 'reuse'):
-            return self.create_sample_machine_reuse(**kwargs)
+    # def create_sample_machine(self, name=None, **kwargs):
+    #     if not name or name in ('a', 'terms'):
+    #         return self.create_sample_machine_terms(**kwargs)
+    #     elif name in ('b', 'ordered'):
+    #         return self.create_sample_machine_ordered(**kwargs)
+    #     elif name in ('b', 'ordered2'):
+    #         return self.create_sample_machine_ordered2(**kwargs)
+    #     elif name in ('c', 'matter'):
+    #         return self.create_sample_machine_matter(**kwargs)
+    #     elif name in ('c2', 'matter2'):
+    #         return self.create_sample_machine_matter2(**kwargs)
+    #     elif name in ('c3', 'matter3'):
+    #         return self.create_sample_machine_matter3(**kwargs)
+    #     elif name in ('d', 'nested'):
+    #         return self.create_sample_machine_nested(**kwargs)
+    #     elif name in ('e', 'reuse'):
+    #         return self.create_sample_machine_reuse(**kwargs)
 
     def create_sample_machine_terms(self, **kwargs):
         # define our states and transitions
@@ -102,6 +101,8 @@ class MachineCatalog(dict):
             {'trigger': 'ionize', 'source': 'gas', 'dest': 'plasma'}
         ]
 
+        # NOTE: the 2 statements below are functionally equivalent to the 1 above
+
         # transitions = [
         #     ['melt', 'solid', 'liquid'],
         #     ['evaporate', 'liquid', 'gas'],
@@ -116,7 +117,6 @@ class MachineCatalog(dict):
         #     {'trigger': 'ionize', 'source': 'gas', 'dest': 'plasma'}
         # ]
 
-        # Initialize
         # machine = Machine(model=Matter(), states=states, transitions=transitions, **kwargs)
         machine = Machine(states=states, transitions=transitions, initial='liquid', **kwargs)
 
@@ -279,7 +279,6 @@ def _init_mimeutils_mime_types():
     obj = MimeTypes()
     # this is a special case since the DOT extension is normally mapped to 'application/msword'
     obj.add_type('text/plain', '.dot', True)
-    # obj.add_type('text/plain', '.dot', False)
     return obj
 
 
@@ -304,8 +303,11 @@ def graph_machine(machine, title=None, image_format=None, layout_program=None):
     Generates an image of the graph of a FSM Machine.
 
     :param machine: The <transitions.Machine> to generate a graph image of.
-    :param image_format:
-        Possible values include: 'png', 'svg'.
+    :param title: The graph's title text label.
+    :param image_format: Possible values include: 'bmp', 'canon', 'cgimage', 'cmap', 'cmapx', 'cmapx_np', 'dot',
+        'eps', 'exr', 'fig', 'gif', 'gv', 'icns', 'ico', 'imap', 'imap_np', 'ismap', 'jp2', 'jpe', 'jpeg', 'jpg',
+        'pct', 'pdf', 'pic', 'pict', 'plain', 'plain-ext', 'png', 'pov', 'ps', 'ps2', 'psd', 'sgi', 'svg', 'svgz',
+        'tga', 'tif', 'tiff', 'tk', 'vml', 'vmlz', 'xdot', 'xdot1.2', 'xdot1.4'
     :param layout_program: The graphviz layout program to use.
         Possible values include: 'neato', 'dot', 'twopi', 'circo', 'fdp', 'nop', 'wc', 'acyclic', 'gvpr', 'gvcolor',
         'ccomps', 'sccmap', 'tred', 'sfdp'..
@@ -315,11 +317,8 @@ def graph_machine(machine, title=None, image_format=None, layout_program=None):
     image_format = image_format or 'png'
 
     graph = machine.get_graph(title=title)
-    # graph.layout()  # layout with default (neato)
-    # graph.layout(prog=layout_program)
-    # graph.draw('my_state_diagram.png', prog='dot')
-    image = graph.draw(format=image_format, prog=layout_program)
-    return image
+    output = graph.draw(format=image_format, prog=layout_program)
+    return output
 
 
 def get_machine_dot(machine, title=None, layout_program=None):
@@ -334,9 +333,3 @@ def get_machine_dot(machine, title=None, layout_program=None):
     """
     layout_program = layout_program or 'dot'
     return graph_machine(machine=machine, title=title, layout_program=layout_program, image_format='dot')
-    # layout_program = layout_program or 'dot'
-    #
-    # graph = machine.get_graph(title=title, diagram_class=BetterFSMGraph)
-    # # graph.layout()  # layout with default (neato)
-    # graph.layout(prog=layout_program)
-    # return graph.to_dot()

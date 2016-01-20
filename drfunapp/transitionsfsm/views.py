@@ -23,12 +23,6 @@ def transitionsfsm_root(request, format=None):
                                                     request=request, format=format, args=('matter',)),
         'transitionsfsm_machines_pk_transition': reverse('transitionsfsm_machines_pk_transition',
                                                          request=request, format=format, args=('matter',)),
-        # 'transitionsfsm_one': reverse('transitionsfsm_one', request=request, format=format),
-        # 'transitionsfsm_two': reverse('transitionsfsm_two', request=request, format=format),
-        # 'transitionsfsm_image': reverse(transitionsfsm_image, request=request, format=format),
-        # 'transitionsfsm_text': reverse(transitionsfsm_text, request=request, format=format),
-        # 'hello_world_view': (reverse('transitionsfsm_helloworld', request=request, format=format),
-        #                      reverse('transitionsfsm_hello', request=request, format=format))
     })
 
 
