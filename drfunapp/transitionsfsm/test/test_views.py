@@ -85,7 +85,7 @@ class TestMachinesRootView(APITestCase):
         eq_(response.status_code, 405)
 
 
-class TestMachinesPKView(APITestCase):
+class TestMachinesPkView(APITestCase):
     """
     Tests the transitionsfsm_machines_pk FBV.
     """
@@ -114,7 +114,7 @@ class TestMachinesPKView(APITestCase):
         eq_(response.status_code, 405)
 
 
-class TestMachinesPKBlueprintView(APITestCase):
+class TestMachinesPkBlueprintView(APITestCase):
     """
     Tests the transitionsfsm_machines_pk_blueprint FBV.
     """
@@ -143,7 +143,7 @@ class TestMachinesPKBlueprintView(APITestCase):
         eq_(response.status_code, 405)
 
 
-class TestMachinesPKGraphView(APITestCase):
+class TestMachinesPkGraphView(APITestCase):
     """
     Tests the transitionsfsm_machines_pk_graph FBV.
     """
@@ -174,7 +174,7 @@ class TestMachinesPKGraphView(APITestCase):
         eq_(response.status_code, 405)
 
 
-class TestMachinesPKGraphPngView(TestMachinesPKGraphView):
+class TestMachinesPkGraphPngView(TestMachinesPkGraphView):
     """
     Tests the transitionsfsm_machines_pk_graph FBV's support for DOT responses.
     """
@@ -184,7 +184,7 @@ class TestMachinesPKGraphPngView(TestMachinesPKGraphView):
         self.expected_content_type = 'image/png'
 
 
-class TestMachinesPKGraphJpegView(TestMachinesPKGraphView):
+class TestMachinesPkGraphJpegView(TestMachinesPkGraphView):
     """
     Tests the transitionsfsm_machines_pk_graph FBV's support for DOT responses.
     """
@@ -194,7 +194,7 @@ class TestMachinesPKGraphJpegView(TestMachinesPKGraphView):
         self.expected_content_type = 'image/jpeg'
 
 
-class TestMachinesPKGraphDotView(TestMachinesPKGraphView):
+class TestMachinesPkGraphDotView(TestMachinesPkGraphView):
     """
     Tests the transitionsfsm_machines_pk_graph FBV's support for DOT responses.
     """
@@ -204,7 +204,7 @@ class TestMachinesPKGraphDotView(TestMachinesPKGraphView):
         self.expected_content_type = 'text/plain'
 
 
-class TestMachinesPKGraphXdot14View(TestMachinesPKGraphView):
+class TestMachinesPkGraphXdot14View(TestMachinesPkGraphView):
     """
     Tests the transitionsfsm_machines_pk_graph FBV's support for DOT responses.
     """
@@ -214,7 +214,7 @@ class TestMachinesPKGraphXdot14View(TestMachinesPKGraphView):
         self.expected_content_type = 'text/plain'
 
 
-class TestMachinesPKGraphSvgView(TestMachinesPKGraphView):
+class TestMachinesPkGraphSvgView(TestMachinesPkGraphView):
     """
     Tests the transitionsfsm_machines_pk_graph FBV's support for DOT responses.
     """
@@ -224,7 +224,7 @@ class TestMachinesPKGraphSvgView(TestMachinesPKGraphView):
         self.expected_content_type = 'image/svg+xml'
 
 
-class TestMachinesPKGraphPdfView(TestMachinesPKGraphView):
+class TestMachinesPkGraphPdfView(TestMachinesPkGraphView):
     """
     Tests the transitionsfsm_machines_pk_graph FBV's support for DOT responses.
     """
@@ -234,7 +234,7 @@ class TestMachinesPKGraphPdfView(TestMachinesPKGraphView):
         self.expected_content_type = 'application/pdf'
 
 
-class TestMachinesPKTransitionView(APITestCase):
+class TestMachinesPkTransitionView(APITestCase):
     """
     Tests the transitionsfsm_machines_pk_transition FBV.
     """
