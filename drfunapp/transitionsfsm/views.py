@@ -90,7 +90,7 @@ def transitionsfsm_machines_pk_graph(request, pk, ext=None):
     if request.method == 'GET':
         m = _machine_catalog.get(pk)
         image_format = str(ext or '').lower()
-        return generate_image_response(m, title=pk, image_format=image_format)
+        return create_graphviz_graph_response(m, title=pk, image_format=image_format)
     elif request.method == 'POST':
         pass
 
@@ -119,16 +119,36 @@ def summarize_machine(m, machine_name, request):
 def get_machine_detail_urls(machine_name, request):
     return [
         ('detail', reverse('transitionsfsm_machines_pk', request=request, args=(machine_name,))),
-        ('graph', reverse('transitionsfsm_machines_pk_graph', request=request, args=(machine_name,))),
-        ('graph (jpeg)', reverse('transitionsfsm_machines_pk_graph', request=request, args=(machine_name, '.jpeg'))),
+        ('graph', [
+            reverse('transitionsfsm_machines_pk_graph', request=request, args=(machine_name,)),
+            {
+                'dot': reverse('transitionsfsm_machines_pk_graph', request=request, args=(machine_name, '.dot')),
+                'xdot': reverse('transitionsfsm_machines_pk_graph', request=request, args=(machine_name, '.xdot')),
+                'xdot1.4': reverse('transitionsfsm_machines_pk_graph', request=request, args=(machine_name, '.xdot1.4')),  # noqa
+                'jpeg': reverse('transitionsfsm_machines_pk_graph', request=request, args=(machine_name, '.jpeg')),
+                'png': reverse('transitionsfsm_machines_pk_graph', request=request, args=(machine_name, '.png')),
+                'svg': reverse('transitionsfsm_machines_pk_graph', request=request, args=(machine_name, '.svg')),
+                'pdf': reverse('transitionsfsm_machines_pk_graph', request=request, args=(machine_name, '.pdf'))
+            }]),
         ('blueprint', reverse('transitionsfsm_machines_pk_blueprint', request=request, args=(machine_name,))),
         # ('transition', reverse('transitionsfsm_machines_pk_transition', request=request, args=(machine_name,))),
     ]
 
 
-def generate_image_response(machine, title=None, image_format=None):
+def create_graphviz_graph_response(machine, title=None, image_format=None):
     from django.http import HttpResponse as DjangoHttpResponse
 
     image_format = image_format or 'png'
-    img = utils.graph_machine(machine, title=title, image_format=image_format, layout_program='dot')
-    return DjangoHttpResponse(img, content_type='image/{}'.format(image_format))
+    data = utils.graph_machine(machine, title=title, image_format=image_format, layout_program='dot')
+    if image_format == 'dot':
+        # this is a special case since the DOT extension is normally mapped to 'application/msword'
+        content_type = 'text/plain'
+    else:
+        content_type = utils.MimeUtils.get_mime_type(image_format)
+
+    if content_type == 'text/plain':
+        # return Response(data)
+        # return Response(data, content_type=content_type)
+        return DjangoHttpResponse(data, content_type=content_type)
+    else:
+        return DjangoHttpResponse(data, content_type=content_type)

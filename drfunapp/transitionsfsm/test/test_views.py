@@ -150,10 +150,12 @@ class TestMachinesPKGraphView(APITestCase):
 
     def setUp(self):
         self.url = reverse(transitionsfsm_machines_pk_graph, args=('matter',))
+        self.expected_content_type = 'image/png'
 
     def test_get_request_succeeds(self):
         response = self.client.get(self.url)
         eq_(response.status_code, 200)
+        eq_(response['Content-Type'], self.expected_content_type)
 
     def test_options_request_succeeds(self):
         response = self.client.options(self.url)
@@ -170,6 +172,66 @@ class TestMachinesPKGraphView(APITestCase):
     def test_post_request_with_no_data_fails(self):
         response = self.client.post(self.url, {})
         eq_(response.status_code, 405)
+
+
+class TestMachinesPKGraphPngView(TestMachinesPKGraphView):
+    """
+    Tests the transitionsfsm_machines_pk_graph FBV's support for DOT responses.
+    """
+
+    def setUp(self):
+        self.url = reverse(transitionsfsm_machines_pk_graph, args=('matter', '.png'))
+        self.expected_content_type = 'image/png'
+
+
+class TestMachinesPKGraphJpegView(TestMachinesPKGraphView):
+    """
+    Tests the transitionsfsm_machines_pk_graph FBV's support for DOT responses.
+    """
+
+    def setUp(self):
+        self.url = reverse(transitionsfsm_machines_pk_graph, args=('matter', '.jpeg'))
+        self.expected_content_type = 'image/jpeg'
+
+
+class TestMachinesPKGraphDotView(TestMachinesPKGraphView):
+    """
+    Tests the transitionsfsm_machines_pk_graph FBV's support for DOT responses.
+    """
+
+    def setUp(self):
+        self.url = reverse(transitionsfsm_machines_pk_graph, args=('matter', '.dot'))
+        self.expected_content_type = 'text/plain'
+
+
+class TestMachinesPKGraphXdot14View(TestMachinesPKGraphView):
+    """
+    Tests the transitionsfsm_machines_pk_graph FBV's support for DOT responses.
+    """
+
+    def setUp(self):
+        self.url = reverse(transitionsfsm_machines_pk_graph, args=('matter', '.xdot1.4'))
+        self.expected_content_type = 'text/plain'
+
+
+class TestMachinesPKGraphSvgView(TestMachinesPKGraphView):
+    """
+    Tests the transitionsfsm_machines_pk_graph FBV's support for DOT responses.
+    """
+
+    def setUp(self):
+        self.url = reverse(transitionsfsm_machines_pk_graph, args=('matter', '.svg'))
+        self.expected_content_type = 'image/svg+xml'
+
+
+class TestMachinesPKGraphPdfView(TestMachinesPKGraphView):
+    """
+    Tests the transitionsfsm_machines_pk_graph FBV's support for DOT responses.
+    """
+
+    def setUp(self):
+        self.url = reverse(transitionsfsm_machines_pk_graph, args=('matter', '.pdf'))
+        self.expected_content_type = 'application/pdf'
 
 
 class TestMachinesPKTransitionView(APITestCase):
