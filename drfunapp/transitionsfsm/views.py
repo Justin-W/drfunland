@@ -132,7 +132,7 @@ def create_machine(states, transitions, initial, order, options):
 
 def get_machine_list(request):
     mc = _machine_catalog
-    # data = {k: summarize_machine(m, machine_name=k, request=request) for k, m in mc.items()}
+    # data = {k: get_machine_detail_dom(m, machine_name=k, request=request) for k, m in mc.items()}
     # data = {k: dict(get_machine_detail_urls(machine_name=k, request=request)) for k, m in mc.items()}
     # data = [(k, dict(get_machine_detail_urls(machine_name=k, request=request))) for k, m in mc.items()]
     # data = [{k: dict(get_machine_detail_urls(machine_name=k, request=request))} for k, m in mc.items()]
@@ -151,7 +151,7 @@ def transitionsfsm_machines_pk(request, pk):
         m = _machine_catalog.get(pk)
         # LogUtils.log_object_state(m.blueprints, level=logging.WARN, name='m.blueprints', context='original')
         # LogUtils.log_object_state(m.snapshot(), level=logging.WARN, name='m.snapshot()', context='original')
-        data = summarize_machine(m, machine_name=pk, request=request)
+        data = get_machine_detail_dom(m, machine_name=pk, request=request)
         return Response(data)
     elif request.method == 'POST':
         pass
@@ -164,7 +164,7 @@ def transitionsfsm_machines_pk(request, pk):
 def transitionsfsm_machines_pk_blueprint(request, pk):
     if request.method == 'GET':
         m = _machine_catalog.get(pk)
-        data = summarize_machine(m, machine_name=pk, request=request).get('blueprints')
+        data = get_machine_detail_dom(m, machine_name=pk, request=request).get('blueprints')
         return Response(data)
     elif request.method == 'POST':
         pass
@@ -207,12 +207,12 @@ def transitionsfsm_machines_pk_transition(request, pk):
     t = m.trigger_transition(trigger=trigger, dest_state=dest)
     if not t:
         raise RequestedOperationFailedException()
-    # data = summarize_machine(m, machine_name=pk, request=request)
+    # data = get_machine_detail_dom(m, machine_name=pk, request=request)
     data = m.snapshot()
     return Response(data)
 
 
-def summarize_machine(m, machine_name, request):
+def get_machine_detail_dom(m, machine_name, request):
     d = {'_URLS': get_machine_detail_urls(machine_name, request)}
     # d.update(utils.summarize_machine(m))
     d.update(m.summarize())
