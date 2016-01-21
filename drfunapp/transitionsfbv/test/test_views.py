@@ -7,24 +7,24 @@ from rest_framework.test import APITestCase
 # from datadiff import diff
 # from datadiff.tools import assert_equal as dd_assert_equal
 
-from ..views import transitionsfsm_root, transitionsfsm_machines_root, \
-    transitionsfsm_machines_pk, transitionsfsm_machines_pk_blueprint, transitionsfsm_machines_pk_graph, \
-    transitionsfsm_machines_pk_transition
+from ..views import transitionsfbv_root, transitionsfbv_machines_root, \
+    transitionsfbv_machines_pk, transitionsfbv_machines_pk_blueprint, transitionsfbv_machines_pk_graph, \
+    transitionsfbv_machines_pk_transition
 
 
 def get_machine_snapshot(client, machine_name):
-    url_detail_ = reverse(transitionsfsm_machines_pk, args=(machine_name,))
+    url_detail_ = reverse(transitionsfbv_machines_pk, args=(machine_name,))
     snapshot_ = client.get(url_detail_).data['snapshot']
     return snapshot_
 
 
 class TestApiRootView(APITestCase):
     """
-    Tests the transitionsfsm_root FBV.
+    Tests the transitionsfbv_root FBV.
     """
 
     def setUp(self):
-        self.url = reverse(transitionsfsm_root)
+        self.url = reverse(transitionsfbv_root)
         self.test_data_in = {'string': 'abc', 'number': 123, 'bool': True, 'list': ['a', 2, 'c']}
 
     def test_get_request_succeeds(self):
@@ -59,21 +59,21 @@ class TestApiRootView(APITestCase):
         response = self.client.get(self.url, data=self.test_data_in)
         eq_(response.status_code, 200)
         response_data = repr(response.data)
-        ok_("'transitionsfsm_root': 'http://testserver/api/v1/transitionsfsm/'" in response_data)
-        ok_("'transitionsfsm_machines_root': 'http://testserver/api/v1/transitionsfsm/machines/'" in response_data)
-        ok_("'transitionsfsm_machines_pk': 'http://testserver/api/v1/transitionsfsm/machines/matter/'" in response_data)  # noqa
-        ok_("'transitionsfsm_machines_pk_blueprint': 'http://testserver/api/v1/transitionsfsm/machines/matter/blueprint/'" in response_data)  # noqa
-        ok_("'transitionsfsm_machines_pk_graph': 'http://testserver/api/v1/transitionsfsm/machines/matter/graph/'" in response_data)  # noqa
-        ok_("'transitionsfsm_machines_pk_transition': 'http://testserver/api/v1/transitionsfsm/machines/matter/transition/'" in response_data)  # noqa
+        ok_("'transitionsfbv_root': 'http://testserver/api/v1/transitionsfbv/'" in response_data)
+        ok_("'transitionsfbv_machines_root': 'http://testserver/api/v1/transitionsfbv/machines/'" in response_data)
+        ok_("'transitionsfbv_machines_pk': 'http://testserver/api/v1/transitionsfbv/machines/matter/'" in response_data)  # noqa
+        ok_("'transitionsfbv_machines_pk_blueprint': 'http://testserver/api/v1/transitionsfbv/machines/matter/blueprint/'" in response_data)  # noqa
+        ok_("'transitionsfbv_machines_pk_graph': 'http://testserver/api/v1/transitionsfbv/machines/matter/graph/'" in response_data)  # noqa
+        ok_("'transitionsfbv_machines_pk_transition': 'http://testserver/api/v1/transitionsfbv/machines/matter/transition/'" in response_data)  # noqa
 
 
 class TestMachinesRootView(APITestCase):
     """
-    Tests the transitionsfsm_machines_root FBV.
+    Tests the transitionsfbv_machines_root FBV.
     """
 
     def setUp(self):
-        self.url = reverse(transitionsfsm_machines_root)
+        self.url = reverse(transitionsfbv_machines_root)
 
     def test_get_request_succeeds(self):
         response = self.client.get(self.url)
@@ -156,11 +156,11 @@ class TestMachinesRootView(APITestCase):
 
 class TestMachinesPkView(APITestCase):
     """
-    Tests the transitionsfsm_machines_pk FBV.
+    Tests the transitionsfbv_machines_pk FBV.
     """
 
     def setUp(self):
-        self.url = reverse(transitionsfsm_machines_pk, args=('matter',))
+        self.url = reverse(transitionsfbv_machines_pk, args=('matter',))
 
     def test_get_request_succeeds(self):
         response = self.client.get(self.url)
@@ -185,11 +185,11 @@ class TestMachinesPkView(APITestCase):
 
 class TestMachinesPkBlueprintView(APITestCase):
     """
-    Tests the transitionsfsm_machines_pk_blueprint FBV.
+    Tests the transitionsfbv_machines_pk_blueprint FBV.
     """
 
     def setUp(self):
-        self.url = reverse(transitionsfsm_machines_pk_blueprint, args=('matter',))
+        self.url = reverse(transitionsfbv_machines_pk_blueprint, args=('matter',))
 
     def test_get_request_succeeds(self):
         response = self.client.get(self.url)
@@ -214,11 +214,11 @@ class TestMachinesPkBlueprintView(APITestCase):
 
 class TestMachinesPkGraphView(APITestCase):
     """
-    Tests the transitionsfsm_machines_pk_graph FBV.
+    Tests the transitionsfbv_machines_pk_graph FBV.
     """
 
     def setUp(self):
-        self.url = reverse(transitionsfsm_machines_pk_graph, args=('matter',))
+        self.url = reverse(transitionsfbv_machines_pk_graph, args=('matter',))
         self.expected_content_type = 'image/png'
 
     def test_get_request_succeeds(self):
@@ -245,72 +245,72 @@ class TestMachinesPkGraphView(APITestCase):
 
 class TestMachinesPkGraphPngView(TestMachinesPkGraphView):
     """
-    Tests the transitionsfsm_machines_pk_graph FBV's support for DOT responses.
+    Tests the transitionsfbv_machines_pk_graph FBV's support for DOT responses.
     """
 
     def setUp(self):
-        self.url = reverse(transitionsfsm_machines_pk_graph, args=('matter', '.png'))
+        self.url = reverse(transitionsfbv_machines_pk_graph, args=('matter', '.png'))
         self.expected_content_type = 'image/png'
 
 
 class TestMachinesPkGraphJpegView(TestMachinesPkGraphView):
     """
-    Tests the transitionsfsm_machines_pk_graph FBV's support for DOT responses.
+    Tests the transitionsfbv_machines_pk_graph FBV's support for DOT responses.
     """
 
     def setUp(self):
-        self.url = reverse(transitionsfsm_machines_pk_graph, args=('matter', '.jpeg'))
+        self.url = reverse(transitionsfbv_machines_pk_graph, args=('matter', '.jpeg'))
         self.expected_content_type = 'image/jpeg'
 
 
 class TestMachinesPkGraphDotView(TestMachinesPkGraphView):
     """
-    Tests the transitionsfsm_machines_pk_graph FBV's support for DOT responses.
+    Tests the transitionsfbv_machines_pk_graph FBV's support for DOT responses.
     """
 
     def setUp(self):
-        self.url = reverse(transitionsfsm_machines_pk_graph, args=('matter', '.dot'))
+        self.url = reverse(transitionsfbv_machines_pk_graph, args=('matter', '.dot'))
         self.expected_content_type = 'text/plain'
 
 
 class TestMachinesPkGraphXdot14View(TestMachinesPkGraphView):
     """
-    Tests the transitionsfsm_machines_pk_graph FBV's support for DOT responses.
+    Tests the transitionsfbv_machines_pk_graph FBV's support for DOT responses.
     """
 
     def setUp(self):
-        self.url = reverse(transitionsfsm_machines_pk_graph, args=('matter', '.xdot1.4'))
+        self.url = reverse(transitionsfbv_machines_pk_graph, args=('matter', '.xdot1.4'))
         self.expected_content_type = 'text/plain'
 
 
 class TestMachinesPkGraphSvgView(TestMachinesPkGraphView):
     """
-    Tests the transitionsfsm_machines_pk_graph FBV's support for DOT responses.
+    Tests the transitionsfbv_machines_pk_graph FBV's support for DOT responses.
     """
 
     def setUp(self):
-        self.url = reverse(transitionsfsm_machines_pk_graph, args=('matter', '.svg'))
+        self.url = reverse(transitionsfbv_machines_pk_graph, args=('matter', '.svg'))
         self.expected_content_type = 'image/svg+xml'
 
 
 class TestMachinesPkGraphPdfView(TestMachinesPkGraphView):
     """
-    Tests the transitionsfsm_machines_pk_graph FBV's support for DOT responses.
+    Tests the transitionsfbv_machines_pk_graph FBV's support for DOT responses.
     """
 
     def setUp(self):
-        self.url = reverse(transitionsfsm_machines_pk_graph, args=('matter', '.pdf'))
+        self.url = reverse(transitionsfbv_machines_pk_graph, args=('matter', '.pdf'))
         self.expected_content_type = 'application/pdf'
 
 
 class TestMachinesPkTransitionView(APITestCase):
     """
-    Tests the transitionsfsm_machines_pk_transition FBV.
+    Tests the transitionsfbv_machines_pk_transition FBV.
     """
 
     def setUp(self):
         self.machine_name = 'matter'
-        self.url = reverse(transitionsfsm_machines_pk_transition, args=(self.machine_name,))
+        self.url = reverse(transitionsfbv_machines_pk_transition, args=(self.machine_name,))
 
     def test_get_request_fails(self):
         response = self.client.get(self.url)

@@ -19,7 +19,7 @@ urlpatterns = [
     url(r'^api/v1/', include(router.urls)),
     url(r'^api/v1/echo/', include('echo.urls')),
     url(r'^api/v1/httpbin/', include('httpbin.urls')),
-    url(r'^api/v1/transitionsfsm/', include('transitionsfsm.urls')),
+    url(r'^api/v1/transitionsfbv/', include('transitionsfbv.urls')),
 
     # the 'api-root' from django rest-frameworks default router
     # http://www.django-rest-framework.org/api-guide/routers/#defaultrouter

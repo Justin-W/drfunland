@@ -24,24 +24,24 @@ def get_machine_catalog():
 
 @api_view(('GET',))
 @permission_classes((AllowAny,))
-def transitionsfsm_root(request, format=None):
+def transitionsfbv_root(request, format=None):
     return Response({
-        'transitionsfsm_root': reverse('transitionsfsm_root', request=request, format=format),
-        'transitionsfsm_machines_root': reverse('transitionsfsm_machines_root', request=request, format=format),
-        'transitionsfsm_machines_pk': reverse('transitionsfsm_machines_pk',
+        'transitionsfbv_root': reverse('transitionsfbv_root', request=request, format=format),
+        'transitionsfbv_machines_root': reverse('transitionsfbv_machines_root', request=request, format=format),
+        'transitionsfbv_machines_pk': reverse('transitionsfbv_machines_pk',
                                               request=request, format=format, args=('matter',)),
-        'transitionsfsm_machines_pk_blueprint': reverse('transitionsfsm_machines_pk_blueprint',
+        'transitionsfbv_machines_pk_blueprint': reverse('transitionsfbv_machines_pk_blueprint',
                                                         request=request, format=format, args=('matter',)),
-        'transitionsfsm_machines_pk_graph': reverse('transitionsfsm_machines_pk_graph',
+        'transitionsfbv_machines_pk_graph': reverse('transitionsfbv_machines_pk_graph',
                                                     request=request, format=format, args=('matter',)),
-        'transitionsfsm_machines_pk_transition': reverse('transitionsfsm_machines_pk_transition',
+        'transitionsfbv_machines_pk_transition': reverse('transitionsfbv_machines_pk_transition',
                                                          request=request, format=format, args=('matter',)),
     })
 
 
 @api_view(('GET', 'POST'))
 @permission_classes((AllowAny,))
-def transitionsfsm_machines_root(request):
+def transitionsfbv_machines_root(request):
     if request.method == 'GET':
         data = get_machine_list(request)
         return Response(data)
@@ -146,7 +146,7 @@ def get_machine_list(request):
 
 @api_view(('GET',))
 @permission_classes((AllowAny,))
-def transitionsfsm_machines_pk(request, pk):
+def transitionsfbv_machines_pk(request, pk):
     if request.method == 'GET':
         m = _machine_catalog.get(pk)
         # LogUtils.log_object_state(m.blueprints, level=logging.WARN, name='m.blueprints', context='original')
@@ -161,7 +161,7 @@ def transitionsfsm_machines_pk(request, pk):
 
 @api_view(('GET',))
 @permission_classes((AllowAny,))
-def transitionsfsm_machines_pk_blueprint(request, pk):
+def transitionsfbv_machines_pk_blueprint(request, pk):
     if request.method == 'GET':
         m = _machine_catalog.get(pk)
         # data = get_machine_detail_dom(m, machine_name=pk, request=request).get('blueprints')
@@ -181,7 +181,7 @@ def transitionsfsm_machines_pk_blueprint(request, pk):
 
 @api_view(('GET',))
 @permission_classes((AllowAny,))
-def transitionsfsm_machines_pk_graph(request, pk, ext=None):
+def transitionsfbv_machines_pk_graph(request, pk, ext=None):
     if request.method == 'GET':
         m = _machine_catalog.get(pk)
         image_format = str(ext or '').lower()
@@ -194,7 +194,7 @@ def transitionsfsm_machines_pk_graph(request, pk, ext=None):
 
 @api_view(('GET', 'POST',))
 @permission_classes((AllowAny,))
-def transitionsfsm_machines_pk_transition(request, pk):
+def transitionsfbv_machines_pk_transition(request, pk):
     # {"trigger": "evaporate", "dest": "gas"}
     if request.method == 'GET':
         data = request.GET
@@ -231,9 +231,9 @@ def get_machine_detail_dom(m, machine_name, request):
 
 def get_machine_detail_urls(machine_name, request):
     pk = machine_name
-    pk_graph_view = 'transitionsfsm_machines_pk_graph'
+    pk_graph_view = 'transitionsfbv_machines_pk_graph'
     return [
-        ('detail', reverse('transitionsfsm_machines_pk', request=request, args=(pk,))),
+        ('detail', reverse('transitionsfbv_machines_pk', request=request, args=(pk,))),
         ('graph', [
             reverse(pk_graph_view, request=request, args=(pk,)),
             {
@@ -245,8 +245,8 @@ def get_machine_detail_urls(machine_name, request):
                 'svg': reverse(pk_graph_view, request=request, args=(pk, '.svg')),
                 'pdf': reverse(pk_graph_view, request=request, args=(pk, '.pdf'))
             }]),
-        ('blueprint', reverse('transitionsfsm_machines_pk_blueprint', request=request, args=(pk,))),
-        ('transition', reverse('transitionsfsm_machines_pk_transition', request=request, args=(pk,))),
+        ('blueprint', reverse('transitionsfbv_machines_pk_blueprint', request=request, args=(pk,))),
+        ('transition', reverse('transitionsfbv_machines_pk_transition', request=request, args=(pk,))),
     ]
 
 
