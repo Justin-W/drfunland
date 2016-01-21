@@ -210,7 +210,6 @@ def transitionsfsm_machines_pk_transition(request, pk):
     # data = summarize_machine(m, machine_name=pk, request=request)
     data = m.snapshot()
     return Response(data)
-    # return Response('Not yet implemented')
 
 
 def summarize_machine(m, machine_name, request):
