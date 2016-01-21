@@ -70,11 +70,12 @@ def add_machine_to_catalog(name, machine):
     _machine_catalog[name] = machine
 
 
-def create_machine(states, transitions, initial, order, options):
+def create_machine(states, transitions=None, initial=None, order=None, options=None):
     if not states:
         raise serializers.ValidationError("Invalid value: '{}'".format('states'))
-    # if not transitions:
-    #     raise serializers.ValidationError("Invalid value: '{}'".format('transitions'))
+    if not transitions:
+        transitions = []
+        # raise serializers.ValidationError("Invalid value: '{}'".format('transitions'))
     if not initial:
         initial = states[0]
     options_default = {'auto_transitions': False, 'ignore_invalid_triggers': False}
