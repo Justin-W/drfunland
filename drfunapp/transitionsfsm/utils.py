@@ -425,3 +425,36 @@ def kwargs_merge(kwargs_explicit, kwargs_defaults):
     if kwargs_explicit:
         kwargs_merged.update(kwargs_explicit)
     return kwargs_merged
+
+
+def stringify(obj):
+    """
+    Recursively convert a <list> or <dict> object's inner elements to strings.
+    """
+    # raise NotImplementedError('Broken function!')
+
+    import collections
+
+    if obj is None:
+        return None
+    if isinstance(obj, str):
+        return obj
+    if isinstance(obj, unicode):
+        return obj.encode('utf-8')
+
+    # if isinstance(obj, dict):
+    if isinstance(obj, collections.MutableMapping):
+        # it's a dict-like object
+        return {stringify(key): stringify(value) for key, value in obj.iteritems()}
+
+    if isinstance(obj, list):
+        return [stringify(element) for element in obj]
+
+    if isinstance(obj, set):
+        return set(stringify(element) for element in obj)
+
+    if isinstance(obj, collections.Iterable):
+        # it's a dict-like object
+        return {stringify(key): stringify(value) for key, value in obj.iteritems()}
+
+    return str(obj)
