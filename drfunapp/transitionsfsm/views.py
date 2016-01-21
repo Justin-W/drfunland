@@ -237,7 +237,7 @@ def get_machine_detail_urls(machine_name, request):
                 'pdf': reverse('transitionsfsm_machines_pk_graph', request=request, args=(machine_name, '.pdf'))
             }]),
         ('blueprint', reverse('transitionsfsm_machines_pk_blueprint', request=request, args=(machine_name,))),
-        # ('transition', reverse('transitionsfsm_machines_pk_transition', request=request, args=(machine_name,))),
+        ('transition', reverse('transitionsfsm_machines_pk_transition', request=request, args=(machine_name,))),
     ]
 
 
