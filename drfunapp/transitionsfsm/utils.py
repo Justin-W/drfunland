@@ -1,5 +1,7 @@
 # from transitions import Machine
 # from transitions import HierarchicalMachine as Machine
+import logging
+
 from transitions_monkey_patches import Machine as Machine
 from mimetypes import MimeTypes
 
@@ -312,6 +314,57 @@ class MimeUtils(object):
             return content_type
 
         return 'text/plain'
+
+
+class LogUtils(object):
+    # _logger = logging.Logger('LogUtils', level=logging.DEBUG)
+
+    # @classmethod
+    # def new_logger(cls, ext, strict=True):
+    #     if not ext:
+    #         raise ValueError('Invalid value: ext.')
+    #
+    #     ext = str(ext).lower()
+    #     content_type = cls._mime_types.types_map[strict].get('.{}'.format(ext))
+    #     if content_type:
+    #         return content_type
+    #
+    #     return 'text/plain'
+
+    @classmethod
+    def log_object_state(cls, obj, name=None, context=None, level=None):
+        from pprint import pformat
+        info = dict()
+
+        # funcs = [type, dir, vars, str, repr]
+        # for f in funcs:
+        #     # info[f.__name__] = f(obj)
+        #     # info[inspect.getmembers(f).__name__] = f(obj)
+        #     info[f.f_code.co_name] = f(obj)
+
+        info['type'] = type(obj)
+        # info['dir'] = dir(obj)
+        try:
+            info['vars'] = vars(obj)
+        except TypeError:
+            pass
+        info['str'] = str(obj)
+        info['repr'] = repr(obj)
+
+        # info['inspect.getmembers'] = inspect.getmembers(obj)
+
+        name_msg = ' (name: {name})'.format(name=name) if name else ''
+        context_msg = ' (context: {context})'.format(context=context) if context else ''
+        # state = pprint(info)
+        # state = pprint(dict(info.items()))
+        state = pformat(dict(info.items()))
+        # state = json.dumps(info, indent=2)
+        # state = repr(info)
+        # state = repr(dict(info.items()))
+        # state = json.dumps(info, indent=2)
+        msg = 'Object State{name}{context}: {state}.'.format(name=name_msg, context=context_msg, state=state)
+        level = level or logging.DEBUG
+        logging.log(level=level, msg=msg)
 
 
 def graph_machine(machine, title=None, image_format=None, layout_program=None):
