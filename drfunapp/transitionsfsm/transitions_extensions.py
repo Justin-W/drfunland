@@ -67,7 +67,8 @@ class Machine(OldMachine):
         super(Machine, self).__init__(*args, **kwargs)
 
     def __str__(self):
-        return str(self.summarize())
+        # return str(self.summarize())
+        return str(self.snapshot(verbose=False))
 
     def summarize(self):
         return summarize_machine(self)
