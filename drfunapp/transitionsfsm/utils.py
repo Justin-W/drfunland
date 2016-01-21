@@ -2,7 +2,7 @@
 # from transitions import HierarchicalMachine as Machine
 import logging
 
-from transitions_monkey_patches import Machine as Machine
+from transitions_extensions import Machine as Machine
 from mimetypes import MimeTypes
 
 

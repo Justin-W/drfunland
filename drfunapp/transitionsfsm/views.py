@@ -8,7 +8,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 # from transitions import Machine
-from transitions_monkey_patches import Machine as Machine
+from transitions_extensions import Machine as Machine
 
 from exceptions import RequestedOperationFailedException
 import utils
