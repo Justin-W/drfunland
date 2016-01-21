@@ -50,7 +50,7 @@ def transitionsfsm_machines_root(request):
         m = add_new_machine_to_catalog(data)
 
         # data = m.summarize()
-        data = m.snapshot()
+        data = m.snapshot(verbose=True)
         return Response(data)
 
     raise MethodNotAllowed()

@@ -158,34 +158,72 @@ class Machine(OldMachine):
 
         return transitions
 
-    def snapshot(self):
+    def snapshot(self, verbose=False):
         """
         Generates a hierarchical DOM representation of the Machine's current (object instance) state.
 
+        :param verbose: if True, a 'full' snapshot will be returned.
+            if False, a 'concise' snapshot will be returned.
+            a 'concise' snapshot is often smaller and more readable than a verbose snapshot,
+            but may (in comparison to a full snapshot) be incomplete and/or unsuitable for certain purposes.
         :return: a dict
         """
-        return get_snapshot(self)
+        return get_snapshot(self, verbose=verbose)
 
 
-def get_snapshot(machine):
+def get_snapshot(machine, verbose=False):
     """
     Generates a hierarchical DOM representation of the Machine's current (object instance) state.
 
     :param machine: the Machine to get a snapshot for.
+    :param verbose: if True, a full snapshot will be returned.
+        if False, a 'concise' snapshot will be returned.
+        a 'concise' snapshot is often smaller and more readable than a verbose snapshot,
+        but may (in comparison to a full snapshot) be incomplete and/or unsuitable for certain purposes.
     :return: a dict
     """
+    default_send_event_ = False
+    default_auto_transitions_ = True
+    # default_ordered_transitions_ = False
+    default_ignore_invalid_triggers_ = None
+    # default_before_state_change_ = None
+    # default_after_state_change_ = None
+
+    m = machine
+
     d = dict()
-    # d.update({k: str(v) for k, v in self.__dict__.items()})
-    d.update(machine.blueprints)
-    d['initial'] = machine._initial
-    # d['model'] = self.model
-    # d['events'] = self.events
-    d['current'] = machine.current_state.name
-    d['send_event'] = machine.send_event
-    d['auto_transitions'] = machine.auto_transitions
-    d['ignore_invalid_triggers'] = machine.ignore_invalid_triggers
-    # d['before_state_change'] = self.before_state_change
-    # d['after_state_change'] = self.after_state_change
+
+    try:
+        blueprints = m.blueprints
+    except AttributeError:
+        blueprints = None
+
+    if blueprints:
+        d.update(blueprints)
+    else:
+        # d.update({k: str(v) for k, v in m.__dict__.items()})
+        d.update(summarize_machine(m))
+
+    # noinspection PyProtectedMember
+    d['initial'] = m._initial
+    d['current'] = m.current_state.name
+    if verbose or default_send_event_ != m.send_event:
+        d['send_event'] = m.send_event
+    if verbose or default_auto_transitions_ != m.auto_transitions:
+        d['auto_transitions'] = m.auto_transitions
+    if verbose or default_ignore_invalid_triggers_ != m.ignore_invalid_triggers:
+        d['ignore_invalid_triggers'] = m.ignore_invalid_triggers
+    # if verbose:
+    #     d['model'] = m.model
+    #     d['events'] = m.events
+    #     d['before_state_change'] = m.before_state_change
+    #     d['after_state_change'] = m.after_state_change
+
+    if not verbose:
+        d = filter_none_values(d)
+        if 'transitions' in d:
+            d['transitions'] = [filter_none_values(t) for t in d['transitions']]
+
     return d
 
 
