@@ -1,9 +1,9 @@
 # from transitions import Machine
 # from transitions import HierarchicalMachine as Machine
 import logging
-
-from transitions_extensions import Machine as Machine
 from mimetypes import MimeTypes
+
+from transitions_common.transitions_extensions import Machine as Machine
 
 
 class MachineCatalog(dict):

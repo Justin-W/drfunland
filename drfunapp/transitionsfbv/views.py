@@ -8,11 +8,11 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 # from transitions import Machine
-from transitions_extensions import Machine as Machine
+from transitions_common.transitions_extensions import Machine as Machine
 
-from exceptions import RequestedOperationFailedException
-import utils
-# from utils import LogUtils
+from transitions_common.exceptions import RequestedOperationFailedException
+from transitions_common import utils
+# from transitions_common.utils import LogUtils
 
 _machine_catalog = utils.MachineCatalog()
 _machine_catalog.preload(auto_transitions=False, ignore_invalid_triggers=False)
