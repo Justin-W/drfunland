@@ -213,11 +213,18 @@ def transitionsfsm_machines_pk_transition(request, pk):
 
 
 def get_machine_detail_dom(m, machine_name, request):
-    d = {'_URLS': get_machine_detail_urls(machine_name, request)}
-    # d.update(utils.summarize_machine(m))
-    d.update(m.summarize())
-    d['snapshot'] = m.snapshot()
-    # d['to_json'] = m.to_json()
+    urls_ = get_machine_detail_urls(machine_name, request)
+    d = {}
+    d['_URLS'] = urls_
+    # d['snapshot(verbose=True)'] = m.snapshot(verbose=True)
+    d['snapshot'] = m.snapshot(verbose=False)
+    d['summary'] = m.summarize()
+    try:
+        bp_ = m.blueprints
+    except AttributeError:
+        pass
+    else:
+        d['blueprints'] = bp_
     return d
 
 
