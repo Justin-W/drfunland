@@ -205,15 +205,9 @@ def summarize_machine(m):
 
     :param m: The <transitions.Machine> to summarize.
     """
-    try:
-        blueprints = m.blueprints
-    except AttributeError:
-        blueprints = None
-        # blueprints = dir(m)
     states = [summarize_state(s) for s in m.states]
     events = [summarize_event(e) for e in m.events]
-    return filter_none_values({'blueprints': blueprints, 'states': states, 'events': events})
-    # return filter_none_values({'states': states, 'events': events})
+    return filter_none_values({'states': states, 'events': events})
 
 
 def summarize_state(s):
