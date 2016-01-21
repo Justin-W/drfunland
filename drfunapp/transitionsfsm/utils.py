@@ -17,6 +17,7 @@ class MachineCatalog(dict):
         self['matter3'] = self.create_sample_machine_matter3(**kwargs)
         self['nested'] = self.create_sample_machine_nested(**kwargs)
         self['reuse'] = self.create_sample_machine_reuse(**kwargs)
+        self['task'] = self.create_sample_machine_task(**kwargs)
         self['terms'] = self.create_sample_machine_terms(**kwargs)
         self['traffic3a'] = self.create_sample_machine_traffic_light_3state_1(**kwargs)
         self['traffic4a'] = self.create_sample_machine_traffic_light_4state_1(**kwargs)
@@ -139,6 +140,21 @@ class MachineCatalog(dict):
         states = ['solid', 'liquid', 'gas', 'plasma']
         # states = machine.states
         machine.add_ordered_transitions(states)
+
+        return machine
+
+    def create_sample_machine_task(self, **kwargs):
+        states = ['Unstarted', 'In Progress', 'Completed', 'Cancelled']
+        order = ['Unstarted', 'In Progress', 'Completed']
+        transitions = [
+            ['Start', 'Unstarted', 'In Progress'],
+            ['Complete', 'In Progress', 'Completed'],
+            ['Cancel', 'In Progress', 'Cancelled']
+        ]
+        initial = states[0]
+
+        machine = Machine(states=states, transitions=transitions, initial=initial, **kwargs)
+        machine.add_ordered_transitions(order)
 
         return machine
 
