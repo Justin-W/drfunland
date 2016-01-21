@@ -230,21 +230,23 @@ def get_machine_detail_dom(m, machine_name, request):
 
 
 def get_machine_detail_urls(machine_name, request):
+    pk = machine_name
+    pk_graph_view = 'transitionsfsm_machines_pk_graph'
     return [
-        ('detail', reverse('transitionsfsm_machines_pk', request=request, args=(machine_name,))),
+        ('detail', reverse('transitionsfsm_machines_pk', request=request, args=(pk,))),
         ('graph', [
-            reverse('transitionsfsm_machines_pk_graph', request=request, args=(machine_name,)),
+            reverse(pk_graph_view, request=request, args=(pk,)),
             {
-                'dot': reverse('transitionsfsm_machines_pk_graph', request=request, args=(machine_name, '.dot')),
-                'xdot': reverse('transitionsfsm_machines_pk_graph', request=request, args=(machine_name, '.xdot')),
-                'xdot1.4': reverse('transitionsfsm_machines_pk_graph', request=request, args=(machine_name, '.xdot1.4')),  # noqa
-                'jpeg': reverse('transitionsfsm_machines_pk_graph', request=request, args=(machine_name, '.jpeg')),
-                'png': reverse('transitionsfsm_machines_pk_graph', request=request, args=(machine_name, '.png')),
-                'svg': reverse('transitionsfsm_machines_pk_graph', request=request, args=(machine_name, '.svg')),
-                'pdf': reverse('transitionsfsm_machines_pk_graph', request=request, args=(machine_name, '.pdf'))
+                'dot': reverse(pk_graph_view, request=request, args=(pk, '.dot')),
+                'xdot': reverse(pk_graph_view, request=request, args=(pk, '.xdot')),
+                'xdot1.4': reverse(pk_graph_view, request=request, args=(pk, '.xdot1.4')),
+                'jpeg': reverse(pk_graph_view, request=request, args=(pk, '.jpeg')),
+                'png': reverse(pk_graph_view, request=request, args=(pk, '.png')),
+                'svg': reverse(pk_graph_view, request=request, args=(pk, '.svg')),
+                'pdf': reverse(pk_graph_view, request=request, args=(pk, '.pdf'))
             }]),
-        ('blueprint', reverse('transitionsfsm_machines_pk_blueprint', request=request, args=(machine_name,))),
-        ('transition', reverse('transitionsfsm_machines_pk_transition', request=request, args=(machine_name,))),
+        ('blueprint', reverse('transitionsfsm_machines_pk_blueprint', request=request, args=(pk,))),
+        ('transition', reverse('transitionsfsm_machines_pk_transition', request=request, args=(pk,))),
     ]
 
 
