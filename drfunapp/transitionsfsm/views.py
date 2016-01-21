@@ -164,12 +164,19 @@ def transitionsfsm_machines_pk(request, pk):
 def transitionsfsm_machines_pk_blueprint(request, pk):
     if request.method == 'GET':
         m = _machine_catalog.get(pk)
-        data = get_machine_detail_dom(m, machine_name=pk, request=request).get('blueprints')
+        # data = get_machine_detail_dom(m, machine_name=pk, request=request).get('blueprints')
+        try:
+            bp_ = m.blueprints
+        except AttributeError:
+            raise RequestedOperationFailedException(detail='The specified Machine does not support blueprints functionality.')
+        else:
+            data = bp_
         return Response(data)
     elif request.method == 'POST':
         pass
 
-    return Response('Not yet implemented')
+    # return Response('Not yet implemented')
+    raise MethodNotAllowed()
 
 
 @api_view(('GET',))
@@ -219,12 +226,6 @@ def get_machine_detail_dom(m, machine_name, request):
     # d['snapshot(verbose=True)'] = m.snapshot(verbose=True)
     d['snapshot'] = m.snapshot(verbose=False)
     d['summary'] = m.summarize()
-    try:
-        bp_ = m.blueprints
-    except AttributeError:
-        pass
-    else:
-        d['blueprints'] = bp_
     return d
 
 
