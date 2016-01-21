@@ -402,3 +402,26 @@ def get_machine_dot(machine, title=None, layout_program=None):
     """
     layout_program = layout_program or 'dot'
     return graph_machine(machine=machine, title=title, layout_program=layout_program, image_format='dot')
+
+
+def kwargs_merge(kwargs_explicit, kwargs_defaults):
+    """
+    Combines two 'kwargs'-type instances into a single kwargs.
+
+    E.g. Useful for merging caller-specified kwargs with a set of 'default' kwargs
+    (with values that may or may not overlap with each other).
+
+    :param kwargs_explicit: the explicitly-specified (higher-precedence) kwargs values.
+        These values will take precedence if there is any overlap of keys.
+    :param kwargs_defaults: the default (lower-precedence) kwargs values.
+    :return: a new dict containing the merged values.
+    """
+    if kwargs_explicit is None and kwargs_defaults is None:
+        return None  # do not return non-None if None was passed
+
+    kwargs_merged = {}
+    if kwargs_defaults:
+        kwargs_merged.update(kwargs_defaults)
+    if kwargs_explicit:
+        kwargs_merged.update(kwargs_explicit)
+    return kwargs_merged
