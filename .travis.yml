@@ -1,6 +1,6 @@
 language: python
-os:
-  - linux
+#os:
+#  - linux
 #  - osx
 services:
   - postgresql
