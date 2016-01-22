@@ -24,7 +24,7 @@ def test():
     """
     local('flake8 {}'.format(env.project_name))
     print cyan('flake8 passed!', bold=True)
-    local('python {}/manage.py test'.format(env.project_name))
+    local("python {}/manage.py test --attr='!skip,!skip_local'".format(env.project_name))
 
 
 def init():

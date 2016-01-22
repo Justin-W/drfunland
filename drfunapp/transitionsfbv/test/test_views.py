@@ -3,6 +3,7 @@ import random
 import sys
 from django.core.urlresolvers import reverse
 from nose.tools import eq_, ok_
+from nose.plugins.attrib import attr
 from rest_framework.test import APITestCase
 
 from ..views import transitionsfbv_root, transitionsfbv_machines_root, \
@@ -276,15 +277,15 @@ class TestMachinesPkGraphDotView(TestMachinesPkGraphView):
         self.expected_content_type = 'text/plain'
 
 
-# NOTE: FAILS the travis builds!
-# class TestMachinesPkGraphXdot14View(TestMachinesPkGraphView):
-#     """
-#     Tests the transitionsfbv_machines_pk_graph FBV's support for DOT responses.
-#     """
-#
-#     def setUp(self):
-#         self.url = reverse(transitionsfbv_machines_pk_graph, args=('matter', '.xdot1.4'))
-#         self.expected_content_type = 'text/plain'
+@attr(skip_travis=1)
+class TestMachinesPkGraphXdot14View(TestMachinesPkGraphView):
+    """
+    Tests the transitionsfbv_machines_pk_graph FBV's support for DOT responses.
+    """
+
+    def setUp(self):
+        self.url = reverse(transitionsfbv_machines_pk_graph, args=('matter', '.xdot1.4'))
+        self.expected_content_type = 'text/plain'
 
 
 class TestMachinesPkGraphSvgView(TestMachinesPkGraphView):
