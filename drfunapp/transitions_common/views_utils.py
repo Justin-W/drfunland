@@ -132,6 +132,7 @@ def get_machine_detail_urls(machine_name, request):
                 'pdf': reverse(pk_graph_view, request=request, args=(pk, '.pdf'))
             }]),
         ('blueprint', reverse('transitionsfbv_machines_pk_blueprint', request=request, args=(pk,))),
+        ('snapshot', reverse('transitionsfbv_machines_pk_snapshot', request=request, args=(pk,))),
         ('transition', reverse('transitionsfbv_machines_pk_transition', request=request, args=(pk,))),
     ]
 

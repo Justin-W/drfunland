@@ -1,3 +1,5 @@
+import ast
+
 from rest_framework import serializers
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.exceptions import MethodNotAllowed
@@ -93,6 +95,17 @@ def transitionsfbv_machines_pk_graph(request, pk, ext=None):
         pass
 
     return Response('Not yet implemented')
+
+
+@api_view(('GET',))
+@permission_classes((AllowAny,))
+def transitionsfbv_machines_pk_snapshot(request, pk):
+    data = request.GET
+    mc = get_machine_catalog()
+    m = mc.get(pk)
+    verbose = bool(ast.literal_eval(data.get('verbose', 'False')))
+    data = m.snapshot(verbose=verbose)
+    return Response(data)
 
 
 @api_view(('GET', 'POST',))

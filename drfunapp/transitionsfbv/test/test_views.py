@@ -9,12 +9,14 @@ from rest_framework.test import APITestCase
 
 from ..views import transitionsfbv_root, transitionsfbv_machines_root, \
     transitionsfbv_machines_pk, transitionsfbv_machines_pk_blueprint, transitionsfbv_machines_pk_graph, \
-    transitionsfbv_machines_pk_transition
+    transitionsfbv_machines_pk_snapshot, transitionsfbv_machines_pk_transition
 
 
 def get_machine_snapshot(client, machine_name):
-    url_detail_ = reverse(transitionsfbv_machines_pk, args=(machine_name,))
-    snapshot_ = client.get(url_detail_).data['snapshot']
+    # url_detail_ = reverse(transitionsfbv_machines_pk, args=(machine_name,))
+    # snapshot_ = client.get(url_detail_).data['snapshot']
+    url_detail_ = reverse(transitionsfbv_machines_pk_snapshot, args=(machine_name,))
+    snapshot_ = client.get(url_detail_).data
     return snapshot_
 
 
@@ -301,6 +303,72 @@ class TestMachinesPkGraphPdfView(TestMachinesPkGraphView):
     def setUp(self):
         self.url = reverse(transitionsfbv_machines_pk_graph, args=('matter', '.pdf'))
         self.expected_content_type = 'application/pdf'
+
+
+class TestMachinesPkSnapshotView(APITestCase):
+    """
+    Tests the transitionsfbv_machines_pk_snapshot FBV.
+    """
+
+    def setUp(self):
+        self.machine_name = 'matter'
+        self.url = reverse(transitionsfbv_machines_pk_snapshot, args=(self.machine_name,))
+
+    def test_get_request_succeeds(self):
+        response = self.client.get(self.url)
+        eq_(response.status_code, 200)
+
+    def test_options_request_succeeds(self):
+        response = self.client.options(self.url)
+        eq_(response.status_code, 200)
+
+    def test_put_request_fails(self):
+        response = self.client.put(self.url)
+        eq_(response.status_code, 405)
+
+    def test_delete_request_fails(self):
+        response = self.client.delete(self.url)
+        eq_(response.status_code, 405)
+
+    def test_get_request_with_no_data_succeeds(self):
+        response = self.client.get(self.url, {})
+        eq_(response.status_code, 200)
+
+    def test_get_with_verbose_true_succeeds(self):
+        response = self.client.get(self.url, {'verbose': True})
+        # expected = {'current': 'liquid', 'send_event': False, 'initial': 'liquid', 'states': ['solid', 'liquid', 'gas', 'plasma'], 'auto_transitions': False, 'ignore_invalid_triggers': False, 'transitions': [{'unless': None, 'dest': 'liquid', 'after': None, 'source': 'solid', 'trigger': 'melt', 'conditions': None, 'before': None}, {'unless': None, 'dest': 'gas', 'after': None, 'source': 'liquid', 'trigger': 'evaporate', 'conditions': None, 'before': None}, {'unless': None, 'dest': 'gas', 'after': None, 'source': 'solid', 'trigger': 'sublimate', 'conditions': None, 'before': None}, {'unless': None, 'dest': 'plasma', 'after': None, 'source': 'gas', 'trigger': 'ionize', 'conditions': None, 'before': None}]}  # noqa
+        expected = {
+            'current': 'liquid', 'initial': 'liquid',
+            'send_event': False, 'auto_transitions': False, 'ignore_invalid_triggers': False,
+            'states': ['solid', 'liquid', 'gas', 'plasma'],
+            'transitions': [
+                {'unless': None, 'dest': 'liquid', 'after': None, 'source': 'solid', 'trigger': 'melt',
+                 'conditions': None, 'before': None},
+                {'unless': None, 'dest': 'gas', 'after': None, 'source': 'liquid', 'trigger': 'evaporate',
+                 'conditions': None, 'before': None},
+                {'unless': None, 'dest': 'gas', 'after': None, 'source': 'solid', 'trigger': 'sublimate',
+                 'conditions': None, 'before': None},
+                {'unless': None, 'dest': 'plasma', 'after': None, 'source': 'gas', 'trigger': 'ionize',
+                 'conditions': None, 'before': None}]
+        }
+
+        eq_(response.status_code, 200)
+        self.assertDictEqual(response.data, expected)
+
+    def test_get_with_verbose_false_succeeds(self):
+        response = self.client.get(self.url, {'verbose': False})
+        # expected = {'states': ['solid', 'liquid', 'gas', 'plasma'], 'initial': 'liquid', 'current': 'liquid', 'auto_transitions': False, 'ignore_invalid_triggers': False, 'transitions': [{'dest': 'liquid', 'source': 'solid', 'trigger': 'melt'}, {'dest': 'gas', 'source': 'liquid', 'trigger': 'evaporate'}, {'dest': 'gas', 'source': 'solid', 'trigger': 'sublimate'}, {'dest': 'plasma', 'source': 'gas', 'trigger': 'ionize'}]}  # noqa
+        expected = {
+            'current': 'liquid', 'initial': 'liquid', 'auto_transitions': False, 'ignore_invalid_triggers': False,
+            'states': ['solid', 'liquid', 'gas', 'plasma'],
+            'transitions': [
+                {'dest': 'liquid', 'source': 'solid', 'trigger': 'melt'},
+                {'dest': 'gas', 'source': 'liquid', 'trigger': 'evaporate'},
+                {'dest': 'gas', 'source': 'solid', 'trigger': 'sublimate'},
+                {'dest': 'plasma', 'source': 'gas', 'trigger': 'ionize'}]
+        }
+        eq_(response.status_code, 200)
+        self.assertDictEqual(response.data, expected)
 
 
 class TestMachinesPkTransitionView(APITestCase):

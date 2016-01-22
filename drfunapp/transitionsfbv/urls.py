@@ -15,6 +15,8 @@ urlpatterns = [
     #     name='transitionsfbv_machines_pk_graph'),
     url(r'^machines/(?P<pk>[a-zA-Z0-9]+)/graph(\.(?P<ext>([a-zA-Z0-9\.]+)))?/$', views.transitionsfbv_machines_pk_graph,
         name='transitionsfbv_machines_pk_graph'),
+    url(r'^machines/(?P<pk>[a-zA-Z0-9]+)/snapshot/$', views.transitionsfbv_machines_pk_snapshot,
+        name='transitionsfbv_machines_pk_snapshot'),
     url(r'^machines/(?P<pk>[a-zA-Z0-9]+)/transition/$', views.transitionsfbv_machines_pk_transition,
         name='transitionsfbv_machines_pk_transition'),
 ]
