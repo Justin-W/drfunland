@@ -12,11 +12,11 @@ from ..views import transitionsfbv_root, transitionsfbv_machines_root, \
     transitionsfbv_machines_pk_snapshot, transitionsfbv_machines_pk_transition
 
 
-def get_machine_snapshot(client, machine_name):
+def get_machine_snapshot(client, machine_name, verbose=False):
     # url_detail_ = reverse(transitionsfbv_machines_pk, args=(machine_name,))
     # snapshot_ = client.get(url_detail_).data['snapshot']
     url_detail_ = reverse(transitionsfbv_machines_pk_snapshot, args=(machine_name,))
-    snapshot_ = client.get(url_detail_).data
+    snapshot_ = client.get(url_detail_, {'verbose': bool(verbose)}).data
     return snapshot_
 
 
@@ -133,13 +133,13 @@ class TestMachinesRootView(APITestCase):
             'current': states[0],
             'initial': states[0],
             'states': [states[0], states[1], states[2], states[3]],
-            'send_event': False, 'auto_transitions': True, 'ignore_invalid_triggers': None,
+            'send_event': False, 'auto_transitions': False, 'ignore_invalid_triggers': False,
             'transitions': [
                 {'unless': None, 'dest': states[1], 'after': None, 'source': states[0], 'trigger': transitions[0][0],
                  'conditions': None, 'before': None},
-                {'unless': None, 'dest': states[2], 'after': None, 'source': states[1], 'trigger': transitions[0][1],
+                {'unless': None, 'dest': states[2], 'after': None, 'source': states[1], 'trigger': transitions[1][0],
                  'conditions': None, 'before': None},
-                {'unless': None, 'dest': states[3], 'after': None, 'source': states[1], 'trigger': transitions[0][2],
+                {'unless': None, 'dest': states[3], 'after': None, 'source': states[1], 'trigger': transitions[2][0],
                  'conditions': None, 'before': None},
                 {'unless': None, 'dest': states[1], 'after': None, 'source': states[0], 'trigger': 'next_state',
                  'conditions': None, 'before': None},
@@ -150,8 +150,10 @@ class TestMachinesRootView(APITestCase):
         }
         response = self.client.post(self.url, data=data)
         eq_(response.status_code, 200)
-        eq_(sorted(dict(response.data)), sorted(expected))
-        snapshot_ = get_machine_snapshot(self.client, machine_name)
+        self.assertDictEqual(response.data, expected)
+        # get the new object's data from the server, and compare it with the original (intended) values
+        snapshot_ = get_machine_snapshot(self.client, machine_name, verbose=True)
+        eq_(snapshot_['initial'], initial)
         eq_(snapshot_['current'], initial)
         eq_(snapshot_['states'], states)
 
