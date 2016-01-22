@@ -4,8 +4,6 @@ import sys
 from django.core.urlresolvers import reverse
 from nose.tools import eq_, ok_
 from rest_framework.test import APITestCase
-# from datadiff import diff
-# from datadiff.tools import assert_equal as dd_assert_equal
 
 from ..views import transitionsfbv_root, transitionsfbv_machines_root, \
     transitionsfbv_machines_pk, transitionsfbv_machines_pk_blueprint, transitionsfbv_machines_pk_graph, \
