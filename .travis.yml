@@ -1,4 +1,7 @@
 language: python
+os:
+  - linux
+  - osx
 services:
   - postgresql
   - redis-server
@@ -37,3 +40,14 @@ sudo: false
 
 matrix:
   fast_finish: true
+#  allow_failures:
+#    - os: osx
+
+addons:
+  apt:
+    packages:
+      - graphviz
+
+before install:
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update          ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install graphviz; fi
