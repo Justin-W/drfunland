@@ -91,7 +91,7 @@ def create_machine(states, transitions=None, initial=None, order=None, options=N
     return m
 
 
-def get_machine_list(request):
+def get_machine_list(request, view_prefix):
     mc = _machine_catalog
     # data = {k: get_machine_detail_dom(m, machine_name=k, request=request) for k, m in mc.items()}
     # data = {k: dict(get_machine_detail_urls(machine_name=k, request=request)) for k, m in mc.items()}
@@ -101,12 +101,12 @@ def get_machine_list(request):
     keys = sorted(mc.keys())
     # pairs = [(k, mc[k]) for k in keys]
     # data = [{k: dict(get_machine_detail_urls(machine_name=k, request=request))} for k in keys]
-    data = [{'id': k, 'urls': dict(get_machine_detail_urls(machine_name=k, request=request))} for k in keys]
+    data = [{'id': k, 'urls': dict(get_machine_detail_urls(machine_name=k, request=request, view_prefix=view_prefix))} for k in keys]  # noqa
     return data
 
 
-def get_machine_detail_dom(m, machine_name, request):
-    urls_ = get_machine_detail_urls(machine_name, request)
+def get_machine_detail_dom(m, machine_name, request, view_prefix):
+    urls_ = get_machine_detail_urls(machine_name, request, view_prefix)
     d = {}
     d['_URLS'] = urls_
     # d['snapshot(verbose=True)'] = m.snapshot(verbose=True)
@@ -115,11 +115,11 @@ def get_machine_detail_dom(m, machine_name, request):
     return d
 
 
-def get_machine_detail_urls(machine_name, request):
+def get_machine_detail_urls(machine_name, request, view_prefix):
     pk = machine_name
-    pk_graph_view = 'transitionsfbv_machines_pk_graph'
+    pk_graph_view = '{}machines_pk_graph'.format(view_prefix)
     return [
-        ('detail', reverse('transitionsfbv_machines_pk', request=request, args=(pk,))),
+        ('detail', reverse('{}machines_pk'.format(view_prefix), request=request, args=(pk,))),
         ('graph', [
             reverse(pk_graph_view, request=request, args=(pk,)),
             {
@@ -131,9 +131,9 @@ def get_machine_detail_urls(machine_name, request):
                 'svg': reverse(pk_graph_view, request=request, args=(pk, '.svg')),
                 'pdf': reverse(pk_graph_view, request=request, args=(pk, '.pdf'))
             }]),
-        ('blueprint', reverse('transitionsfbv_machines_pk_blueprint', request=request, args=(pk,))),
-        ('snapshot', reverse('transitionsfbv_machines_pk_snapshot', request=request, args=(pk,))),
-        ('transition', reverse('transitionsfbv_machines_pk_transition', request=request, args=(pk,))),
+        ('blueprint', reverse('{}machines_pk_blueprint'.format(view_prefix), request=request, args=(pk,))),
+        ('snapshot', reverse('{}machines_pk_snapshot'.format(view_prefix), request=request, args=(pk,))),
+        ('transition', reverse('{}machines_pk_transition'.format(view_prefix), request=request, args=(pk,))),
     ]
 
 

@@ -15,7 +15,7 @@ from transitions_common.views_utils import add_new_machine_to_catalog, create_gr
 @api_view(('GET',))
 @permission_classes((AllowAny,))
 def transitionsfbv_root(request, format=None):
-    return Response({
+    urls = {
         'transitionsfbv_root': reverse('transitionsfbv_root', request=request, format=format),
         'transitionsfbv_machines_root': reverse('transitionsfbv_machines_root', request=request, format=format),
         'transitionsfbv_machines_pk': reverse('transitionsfbv_machines_pk',
@@ -24,16 +24,21 @@ def transitionsfbv_root(request, format=None):
                                                         request=request, format=format, args=('matter',)),
         'transitionsfbv_machines_pk_graph': reverse('transitionsfbv_machines_pk_graph',
                                                     request=request, format=format, args=('matter',)),
+        'transitionsfbv_machines_pk_snapshot': reverse('transitionsfbv_machines_pk_snapshot',
+                                                       request=request, format=format, args=('matter',)),
         'transitionsfbv_machines_pk_transition': reverse('transitionsfbv_machines_pk_transition',
                                                          request=request, format=format, args=('matter',)),
-    })
+    }
+    # data = {k: urls[k] for k in sorted(urls.keys())}
+    data = [(k, urls[k]) for k in sorted(urls.keys())]
+    return Response(data)
 
 
 @api_view(('GET', 'POST'))
 @permission_classes((AllowAny,))
 def transitionsfbv_machines_root(request):
     if request.method == 'GET':
-        data = get_machine_list(request)
+        data = get_machine_list(request, view_prefix='transitionsfbv_')
         return Response(data)
     elif request.method == 'POST':
         data = request.data
@@ -54,7 +59,7 @@ def transitionsfbv_machines_pk(request, pk):
         m = mc.get(pk)
         # LogUtils.log_object_state(m.blueprints, level=logging.WARN, name='m.blueprints', context='original')
         # LogUtils.log_object_state(m.snapshot(), level=logging.WARN, name='m.snapshot()', context='original')
-        data = get_machine_detail_dom(m, machine_name=pk, request=request)
+        data = get_machine_detail_dom(m, machine_name=pk, request=request, view_prefix='transitionsfbv_')
         return Response(data)
     elif request.method == 'POST':
         pass
@@ -68,7 +73,7 @@ def transitionsfbv_machines_pk_blueprint(request, pk):
     if request.method == 'GET':
         mc = get_machine_catalog()
         m = mc.get(pk)
-        # data = get_machine_detail_dom(m, machine_name=pk, request=request).get('blueprints')
+        # data = get_machine_detail_dom(m, machine_name=pk, request=request, view_prefix='transitionsfbv_').get('blueprints')
         try:
             bp_ = m.blueprints
         except AttributeError:
