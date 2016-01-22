@@ -107,7 +107,6 @@ def transitionsfbv_machines_pk_transition(request, pk):
     mc = get_machine_catalog()
     m = mc.get(pk)
     trigger = data.get('trigger')
-    # dest = request.POST.get('destination', 'next_state')
     dest = data.get('destination')
 
     if not trigger:
