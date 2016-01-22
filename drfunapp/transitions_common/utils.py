@@ -372,14 +372,27 @@ def graph_machine(machine, title=None, image_format=None, layout_program=None):
     Generates an image of the graph of a FSM Machine.
 
     :param machine: The <transitions.Machine> to generate a graph image of.
-    :param title: The graph's title text label.
-    :param image_format: Possible values include: 'bmp', 'canon', 'cgimage', 'cmap', 'cmapx', 'cmapx_np', 'dot',
+    :param title: The text of the graph's title label.
+    :param image_format: The desired image/file format of the output.
+        The set of valid values is determined by the version of graphviz you are using.
+        Some examples of possible values (copied from graphviz output on different test environments) are shown below.
+        Note that each of the example sets below includes some values not present in other sets.
+
+        1. 'bmp', 'canon', 'cgimage', 'cmap', 'cmapx', 'cmapx_np', 'dot',
         'eps', 'exr', 'fig', 'gif', 'gv', 'icns', 'ico', 'imap', 'imap_np', 'ismap', 'jp2', 'jpe', 'jpeg', 'jpg',
         'pct', 'pdf', 'pic', 'pict', 'plain', 'plain-ext', 'png', 'pov', 'ps', 'ps2', 'psd', 'sgi', 'svg', 'svgz',
         'tga', 'tif', 'tiff', 'tk', 'vml', 'vmlz', 'xdot', 'xdot1.2', 'xdot1.4'
+
+        2. 'canon', 'cmap', 'cmapx', 'cmapx_np', 'dot',
+        'eps', 'fig', 'gd', 'gd2', 'gif', 'gv', 'imap', 'imap_np', 'ismap', 'jpe', 'jpeg', 'jpg',
+        'pdf', 'plain', 'plain-ext', 'png', 'ps', 'ps2', 'svg', 'svgz',
+        'tk', 'vml', 'vmlz', 'vrml', 'wbmp', 'x11', 'xdot', 'xlib'
     :param layout_program: The graphviz layout program to use.
-        Possible values include: 'neato', 'dot', 'twopi', 'circo', 'fdp', 'nop', 'wc', 'acyclic', 'gvpr', 'gvcolor',
-        'ccomps', 'sccmap', 'tred', 'sfdp'..
+        The set of valid values is determined by the version of graphviz you are using.
+        Some examples of possible values (copied from graphviz output on different test environments) are shown below.
+
+        1. 'neato', 'dot', 'twopi', 'circo', 'fdp', 'nop', 'wc', 'acyclic', 'gvpr', 'gvcolor',
+        'ccomps', 'sccmap', 'tred', 'sfdp'
     :return:
     """
     layout_program = layout_program or 'neato'
