@@ -118,6 +118,7 @@ def get_machine_detail_dom(m, machine_name, request, view_prefix):
 def get_machine_detail_urls(machine_name, request, view_prefix):
     pk = machine_name
     pk_graph_view = '{}machines_pk_graph'.format(view_prefix)
+    url_machines_pk_snapshot = reverse('{}machines_pk_snapshot'.format(view_prefix), request=request, args=(pk,))
     return [
         ('detail', reverse('{}machines_pk'.format(view_prefix), request=request, args=(pk,))),
         ('graph', [
@@ -132,7 +133,11 @@ def get_machine_detail_urls(machine_name, request, view_prefix):
                 'pdf': reverse(pk_graph_view, request=request, args=(pk, '.pdf'))
             }]),
         ('blueprint', reverse('{}machines_pk_blueprint'.format(view_prefix), request=request, args=(pk,))),
-        ('snapshot', reverse('{}machines_pk_snapshot'.format(view_prefix), request=request, args=(pk,))),
+        ('snapshot', [
+            url_machines_pk_snapshot,
+            {
+                'verbose': url_machines_pk_snapshot + '?verbose=True'
+            }]),
         ('transition', reverse('{}machines_pk_transition'.format(view_prefix), request=request, args=(pk,))),
     ]
 
