@@ -64,6 +64,7 @@ class TestApiRootView(APITestCase):
         ok_("'transitionscbv_machines_pk', 'http://testserver/api/v1/transitionscbv/machines/matter/'" in response_data)  # noqa
         ok_("'transitionscbv_machines_pk_blueprint', 'http://testserver/api/v1/transitionscbv/machines/matter/blueprint/'" in response_data)  # noqa
         ok_("'transitionscbv_machines_pk_graph', 'http://testserver/api/v1/transitionscbv/machines/matter/graph/'" in response_data)  # noqa
+        ok_("'transitionscbv_machines_pk_snapshot', 'http://testserver/api/v1/transitionscbv/machines/matter/snapshot/'" in response_data)  # noqa
         ok_("'transitionscbv_machines_pk_transition', 'http://testserver/api/v1/transitionscbv/machines/matter/transition/'" in response_data)  # noqa
 
 
