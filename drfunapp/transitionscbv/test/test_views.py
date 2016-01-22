@@ -59,12 +59,12 @@ class TestApiRootView(APITestCase):
         response = self.client.get(self.url, data=self.test_data_in)
         eq_(response.status_code, 200)
         response_data = repr(response.data)
-        ok_("'transitionscbv_root': 'http://testserver/api/v1/transitionscbv/'" in response_data)
-        ok_("'transitionscbv_machines_root': 'http://testserver/api/v1/transitionscbv/machines/'" in response_data)
-        ok_("'transitionscbv_machines_pk': 'http://testserver/api/v1/transitionscbv/machines/matter/'" in response_data)  # noqa
-        ok_("'transitionscbv_machines_pk_blueprint': 'http://testserver/api/v1/transitionscbv/machines/matter/blueprint/'" in response_data)  # noqa
-        ok_("'transitionscbv_machines_pk_graph': 'http://testserver/api/v1/transitionscbv/machines/matter/graph/'" in response_data)  # noqa
-        ok_("'transitionscbv_machines_pk_transition': 'http://testserver/api/v1/transitionscbv/machines/matter/transition/'" in response_data)  # noqa
+        ok_("'transitionscbv_root', 'http://testserver/api/v1/transitionscbv/'" in response_data)
+        ok_("'transitionscbv_machines_root', 'http://testserver/api/v1/transitionscbv/machines/'" in response_data)
+        ok_("'transitionscbv_machines_pk', 'http://testserver/api/v1/transitionscbv/machines/matter/'" in response_data)  # noqa
+        ok_("'transitionscbv_machines_pk_blueprint', 'http://testserver/api/v1/transitionscbv/machines/matter/blueprint/'" in response_data)  # noqa
+        ok_("'transitionscbv_machines_pk_graph', 'http://testserver/api/v1/transitionscbv/machines/matter/graph/'" in response_data)  # noqa
+        ok_("'transitionscbv_machines_pk_transition', 'http://testserver/api/v1/transitionscbv/machines/matter/transition/'" in response_data)  # noqa
 
 
 class TestMachinesRootView(APITestCase):
