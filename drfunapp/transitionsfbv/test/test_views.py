@@ -216,15 +216,19 @@ class TestMachinesPkBlueprintView(APITestCase):
         eq_(response.status_code, 405)
 
 
-class TestMachinesPkGraphView(APITestCase):
+# @attr(smoke=0)
+# @attr(smoke=1)
+# @attr(skip=1)
+# @attr(runme=1)
+class MachinesPkGraphViewTestCaseMixin(object):
     """
-    Tests the transitionsfbv_machines_pk_graph FBV.
+    TestCase base class for the transitionsfbv_machines_pk_graph FBV.
     """
 
     def setUp(self):
-        self.url = reverse(transitionsfbv_machines_pk_graph, args=('matter',))
-        self.expected_content_type = 'image/png'
+        raise NotImplementedError
 
+    @attr(smoke=1)
     def test_get_request_succeeds(self):
         response = self.client.get(self.url)
         eq_(response.status_code, 200)
@@ -247,7 +251,20 @@ class TestMachinesPkGraphView(APITestCase):
         eq_(response.status_code, 405)
 
 
-class TestMachinesPkGraphPngView(TestMachinesPkGraphView):
+@attr(smoke=1)
+# @attr(skip=1)
+# @attr(runme=1)
+class TestMachinesPkGraphView(APITestCase, MachinesPkGraphViewTestCaseMixin):
+    """
+    Tests the transitionsfbv_machines_pk_graph FBV.
+    """
+
+    def setUp(self):
+        self.url = reverse(transitionsfbv_machines_pk_graph, args=('matter',))
+        self.expected_content_type = 'image/png'
+
+
+class TestMachinesPkGraphPngView(APITestCase, MachinesPkGraphViewTestCaseMixin):
     """
     Tests the transitionsfbv_machines_pk_graph FBV's support for DOT responses.
     """
@@ -257,7 +274,7 @@ class TestMachinesPkGraphPngView(TestMachinesPkGraphView):
         self.expected_content_type = 'image/png'
 
 
-class TestMachinesPkGraphJpegView(TestMachinesPkGraphView):
+class TestMachinesPkGraphJpegView(APITestCase, MachinesPkGraphViewTestCaseMixin):
     """
     Tests the transitionsfbv_machines_pk_graph FBV's support for DOT responses.
     """
@@ -267,7 +284,10 @@ class TestMachinesPkGraphJpegView(TestMachinesPkGraphView):
         self.expected_content_type = 'image/jpeg'
 
 
-class TestMachinesPkGraphDotView(TestMachinesPkGraphView):
+# @attr(smoke=1)
+# @attr(skip=1)
+# @attr(runme=1)
+class TestMachinesPkGraphDotView(APITestCase, MachinesPkGraphViewTestCaseMixin):
     """
     Tests the transitionsfbv_machines_pk_graph FBV's support for DOT responses.
     """
@@ -277,8 +297,9 @@ class TestMachinesPkGraphDotView(TestMachinesPkGraphView):
         self.expected_content_type = 'text/plain'
 
 
+# NOTE: this output format is not supported by the graphviz version on the Travis build server
 @attr(skip_travis=1)
-class TestMachinesPkGraphXdot14View(TestMachinesPkGraphView):
+class TestMachinesPkGraphXdot14View(APITestCase, MachinesPkGraphViewTestCaseMixin):
     """
     Tests the transitionsfbv_machines_pk_graph FBV's support for DOT responses.
     """
@@ -288,7 +309,7 @@ class TestMachinesPkGraphXdot14View(TestMachinesPkGraphView):
         self.expected_content_type = 'text/plain'
 
 
-class TestMachinesPkGraphSvgView(TestMachinesPkGraphView):
+class TestMachinesPkGraphSvgView(APITestCase, MachinesPkGraphViewTestCaseMixin):
     """
     Tests the transitionsfbv_machines_pk_graph FBV's support for DOT responses.
     """
@@ -298,7 +319,10 @@ class TestMachinesPkGraphSvgView(TestMachinesPkGraphView):
         self.expected_content_type = 'image/svg+xml'
 
 
-class TestMachinesPkGraphPdfView(TestMachinesPkGraphView):
+# @attr(smoke=1)
+# @attr(skip=1)
+# @attr(runme=1)
+class TestMachinesPkGraphPdfView(APITestCase, MachinesPkGraphViewTestCaseMixin):
     """
     Tests the transitionsfbv_machines_pk_graph FBV's support for DOT responses.
     """
