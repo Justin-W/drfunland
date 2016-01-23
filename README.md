@@ -7,18 +7,19 @@ Django REST Framework playground. A fun place to play around with [DRF](http://w
 # Quick Start
 
 Here is an overview of how to get the project running (from scratch) on a new dev environment.
+
 1. Follow the steps below **_EXACTLY_** as written for best results.
-1. Install the prerequisites (see the "Prerequisites" section below).
-1. Clone the project.
-1. Follow the instructions in the "One-time setup" section (below).
+2. Install the prerequisites (see the "Prerequisites" section below).
+3. Clone the project.
+4. Follow the instructions in the "One-time setup" section (below).
    - Create the virtualenv.
    - Create the database.
    - Migrate the DB, create a superuser, and run the server.
-1. Follow the instructions in the "Running the app" section (below).
+5. Follow the instructions in the "Running the app" section (below).
    - Run the tests.
    - Run the app server.
    - Manually explore app in your browser.
-1. Begin exploring the source code in your IDE.
+6. Begin exploring the source code in your IDE.
    - Make source code changes.
    - Run the tests.
    - Run the app server.
