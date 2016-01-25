@@ -5,7 +5,7 @@
 
 source ./.init.sh
 
-if [ ! -d {VENV_PATH} ]
+if [ ! -d ${VENV_PATH} ]
 then
     #create it
     bash ./venv.create.sh
