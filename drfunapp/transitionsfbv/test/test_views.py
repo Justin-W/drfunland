@@ -443,6 +443,8 @@ class TestMachinesPkTransitionView(APITestCase):
     #     snapshot_ = get_machine_snapshot(self.client, self.machine_name)
     #     eq_(snapshot_['current'], 'gas')
 
+    # NOTE: This test (and its CBV twin) has side-effects that cause it (and/or others) to fail during the same test run
+    # @attr(skip=1)
     def test_post_request_with_valid_data_succeeds(self):
         snapshot_ = get_machine_snapshot(self.client, self.machine_name)
         eq_(snapshot_['current'], 'liquid')

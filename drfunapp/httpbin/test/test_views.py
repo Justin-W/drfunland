@@ -45,10 +45,11 @@ class TestApiRootView(APITestCase):
     def test_get_request_expected_data(self):
         response = self.client.get(self.url, data=self.test_data_in)
         eq_(response.status_code, 200)
-        ok_("'httpbin_root': 'http://testserver/api/v1/httpbin/'" in repr(response.data))
-        ok_("'httpbin_image': 'http://testserver/api/v1/httpbin/image'" in repr(response.data))
-        ok_("'httpbin_text': 'http://testserver/api/v1/httpbin/text'" in repr(response.data))
-        ok_("'hello_world_view': ('http://testserver/api/v1/httpbin/helloworld', 'http://testserver/api/v1/httpbin/hello')" in repr(response.data))  # noqa
+        response_data = repr(response.data)
+        ok_("'httpbin_root': 'http://testserver/api/v1/httpbin/'" in response_data)
+        ok_("'httpbin_image': 'http://testserver/api/v1/httpbin/image'" in response_data)
+        ok_("'httpbin_text': 'http://testserver/api/v1/httpbin/text'" in response_data)
+        ok_("'hello_world_view': ('http://testserver/api/v1/httpbin/helloworld', 'http://testserver/api/v1/httpbin/hello')" in response_data)  # noqa
 
 
 class TestHelloWorldView(APITestCase):
