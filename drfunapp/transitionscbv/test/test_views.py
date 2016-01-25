@@ -229,6 +229,7 @@ class MachinesPkGraphViewTestCaseMixin(object):
         raise NotImplementedError
 
     @attr(smoke=1)
+    # @attr(assignedto='JohnDoe')
     def test_get_request_succeeds(self):
         response = self.client.get(self.url)
         eq_(response.status_code, 200)
