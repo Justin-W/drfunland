@@ -115,6 +115,13 @@ echo "fab:"
 type fab
 
 echo ""
+echo "graphviz:"
+type dot
+dot -V 2>&1
+type neato
+neato -V 2>&1
+
+echo ""
 echo "java:"
 type java
 java -version 2>&1
