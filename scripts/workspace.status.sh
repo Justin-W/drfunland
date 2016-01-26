@@ -1,7 +1,7 @@
 #!/bin/bash
-# status.workspace.sh
+# workspace.status.sh
 
-# Usage: bash scripts/status.workspace.sh
+# Usage: bash scripts/workspace.status.sh
 
 source ./.init.sh
 
