@@ -95,6 +95,17 @@ echo ""
 echo "brew:"
 type brew
 brew --version
+echo "brew doctor:"
+brew doctor 2>&1
+
+echo ""
+echo "brew cask:"
+brew cask --version
+
+echo ""
+echo "pkg-config:"
+type pkg-config
+pkg-config --version
 
 echo ""
 echo "git:"
