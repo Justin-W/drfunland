@@ -13,11 +13,11 @@ Here is an overview of how to get the project running (from scratch) on a new de
 3. Install the prerequisites (see the "Prerequisites" section below).
    - *Note:* For OS X environments, you should be able to simply run the following
    to complete this step:
-        ```bash
-        cd <path_to_cloned_repo>
-        cd scripts
-        bash workspace.update.osx.sh
-        ```
+```bash
+cd <path_to_cloned_repo>
+cd scripts
+bash workspace.update.osx.sh
+```
 4. Follow the instructions in the "One-time setup" section (below).
    - Create the virtualenv.
    - Create the database.
@@ -69,10 +69,10 @@ Alterations or equivalent implementations may be needed for use on Windows or Li
 - The subsequent examples all assume the following paths are set correctly as environment variables.
 However, these env variables are not required by the app itself, they are merely intended to make the CLI examples
 in this readme more easily customizable.
-    ```bash
-    REPO_PATH=~/dev/github/Justin-W/drfunland/drfunland
-    SCRIPTS_PATH=${REPO_PATH}/scripts
-    ```
+```bash
+REPO_PATH=~/dev/github/Justin-W/drfunland/drfunland
+SCRIPTS_PATH=${REPO_PATH}/scripts
+```
 
 ## One-time setup
 
