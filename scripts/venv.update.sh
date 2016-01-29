@@ -1,7 +1,7 @@
 #!/bin/bash
 # venv.update.sh
 
-# Usage: bash scripts/venv.update.sh
+# Usage: bash ./venv.update.sh
 
 source ./.init.sh
 

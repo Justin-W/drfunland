@@ -1,7 +1,7 @@
 #!/bin/bash
 # venv.activate.sh
 
-# Usage: source scripts/venv.activate.sh
+# Usage: source ./venv.activate.sh
 
 source ./.init.sh
 
