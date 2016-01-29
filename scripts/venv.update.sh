@@ -3,18 +3,10 @@
 
 # Usage: bash ./venv.update.sh
 
-source ./.init.sh
-
-if [ ! -d ${VENV_PATH} ]
-then
-    #create it
-    bash ./venv.create.sh
-fi
-
-#activate it
+# activate the venv (creating a new one if necessary)
 source ./venv.activate.sh
 
-#update it
+# now update it (fast/non-hard)
 
 #default ENV_NAME=local
 ENV_NAME=${1:-local}
