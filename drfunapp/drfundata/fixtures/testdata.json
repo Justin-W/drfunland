@@ -1,0 +1,110 @@
+[
+    {
+        "pk": 1, 
+        "model": "drfundata.webresourcetype", 
+        "fields": {
+            "name": "REST API", 
+            "description": ""
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "drfundata.webresourcetype", 
+        "fields": {
+            "name": "Web Page", 
+            "description": ""
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "drfundata.webresourcetype", 
+        "fields": {
+            "name": "Web Site", 
+            "description": ""
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "drfundata.webresourcetype", 
+        "fields": {
+            "name": "File", 
+            "description": ""
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "drfundata.webresourcetype", 
+        "fields": {
+            "name": "Search Engine", 
+            "description": ""
+        }
+    }, 
+    {
+        "pk": 6, 
+        "model": "drfundata.webresourcetype", 
+        "fields": {
+            "name": "Wiki", 
+            "description": ""
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "drfundata.webresource", 
+        "fields": {
+            "uri": "https://repl.it/languages", 
+            "name": "repl.it/languages", 
+            "resource_type": 2, 
+            "description": ""
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "drfundata.webresource", 
+        "fields": {
+            "uri": "https://repl.it/", 
+            "name": "repl.it", 
+            "resource_type": 3, 
+            "description": ""
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "drfundata.webresource", 
+        "fields": {
+            "uri": "http://httpbin.org/", 
+            "name": "httpbin.org", 
+            "resource_type": 1, 
+            "description": ""
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "drfundata.webresource", 
+        "fields": {
+            "uri": "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png", 
+            "name": "Google Logo", 
+            "resource_type": 4, 
+            "description": ""
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "drfundata.webresource", 
+        "fields": {
+            "uri": "http://www.google.com", 
+            "name": "Google", 
+            "resource_type": 5, 
+            "description": ""
+        }
+    }, 
+    {
+        "pk": 6, 
+        "model": "drfundata.webresource", 
+        "fields": {
+            "uri": "http://www.wikipedia.com", 
+            "name": "Wikipedia", 
+            "resource_type": 6, 
+            "description": ""
+        }
+    }
+]

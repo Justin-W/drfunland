@@ -24,6 +24,7 @@ class Common(Configuration):
         'versatileimagefield',       # image manipulation
 
         # Your apps
+        'drfundata',
         'authentication',
         'users'
 

@@ -9,9 +9,15 @@ from django.views.generic.base import RedirectView
 from rest_framework.routers import DefaultRouter
 
 from users.views import UserViewSet
+from drfundata.views import WebResourceTypeViewSet, WebResourceViewSet
+from drfundata.views import WebResourceTypeHLMViewSet, WebResourceHLMViewSet
 
 router = DefaultRouter()
 router.register(r'users', UserViewSet)
+router.register(r'webresourcetypes', WebResourceTypeViewSet, base_name='webresourcetypes')
+router.register(r'webresources', WebResourceViewSet, base_name='webresources')
+router.register(r'webresourcetypes_linked', WebResourceTypeHLMViewSet)
+router.register(r'webresources_linked', WebResourceHLMViewSet)
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),

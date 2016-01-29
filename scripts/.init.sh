@@ -5,12 +5,15 @@
 
 VENV_PATH=~/pyenvs/drfunlandenv
 APP_NAME=drfunapp
+DBAPP_NAME=drfundata
 
 SCRIPTS_PATH=$PWD
 SCRIPTS_OUTPUT_PATH=${SCRIPTS_PATH}/out
 REPO_PATH=${SCRIPTS_PATH%/scripts*}
 REPO_NAME=${REPO_PATH##*/}
 VENV_NAME=${VENV_PATH##*/}
+APP_PATH=${REPO_PATH}/${APP_NAME}
+MANAGEPY_PATH=${APP_PATH}
 
 ### init additional convenience vars for use in other scripts
 
