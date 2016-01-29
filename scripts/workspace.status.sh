@@ -133,6 +133,13 @@ type neato
 neato -V 2>&1
 
 echo ""
+echo "pygraphviz dependencies:"
+#adapted from pygraphviz's setup_extra.py file
+pkg-config --libs-only-L libcgraph
+pkg-config --cflags-only-I libcgraph
+dotneato-config --ldflags --cflags
+
+echo ""
 echo "java:"
 type java
 java -version 2>&1
