@@ -1,7 +1,7 @@
 #!/bin/bash
 # managepy.test.sh
 
-# Usage: managepy.test.sh
+# Usage: bash ./managepy.test.sh
 
 source ./.init.sh
 source ./venv.activate.sh

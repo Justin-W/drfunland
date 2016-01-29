@@ -1,7 +1,7 @@
 #!/bin/bash
 # venv.deactivate.sh
 
-# Usage: source scripts/venv.deactivate.sh
+# Usage: source ./venv.deactivate.sh
 
 source ./.init.sh
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 # venv.freeze.sh
 
-# Usage: bash scripts/venv.freeze.sh
+# Usage: bash ./venv.freeze.sh
 
 source ./.init.sh
 source ./venv.activate.sh

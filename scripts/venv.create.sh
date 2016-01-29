@@ -1,7 +1,7 @@
 #!/bin/bash
-# venv.update.hard.sh
+# venv.create.sh
 
-# Usage: bash scripts/venv.update.hard.sh
+# Usage: bash ./venv.create.sh
 
 source ./.init.sh
 

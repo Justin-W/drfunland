@@ -1,7 +1,7 @@
 #!/bin/bash
 # workspace.update.osx.sh
 
-# Usage: bash workspace.update.osx.sh
+# Usage: bash ./workspace.update.osx.sh
 
 source ./.init.sh
 
