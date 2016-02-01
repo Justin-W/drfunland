@@ -11,6 +11,7 @@ source ./venv.activate.sh
 #default ENV_NAME=local
 ENV_NAME=${1:-local}
 
+echo "installing packages from ${ENV_NAME}.txt"
 cd ${REPO_PATH}
 pip install -r requirements/${ENV_NAME}.txt
 
