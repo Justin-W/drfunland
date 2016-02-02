@@ -7,6 +7,7 @@ from .models import WebResource, WebResourceType
 
 class CommonEntityFieldsModelAdmin(admin.ModelAdmin):
     list_display = ('name', 'description')
+    change_list_template = 'smuggler/change_list.html'  # enable smuggler buttons
     fieldsets = (
         # (None, {
         #     'fields': ('name', 'description')

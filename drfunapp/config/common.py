@@ -22,6 +22,7 @@ class Common(Configuration):
         'rest_framework.authtoken',  # token authentication
         'django_rq',                 # asynchronous queuing
         'versatileimagefield',       # image manipulation
+        'smuggler',                  # load/dump fixtures via Admin
 
         # Your apps
         'drfundata',

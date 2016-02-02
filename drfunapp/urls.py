@@ -20,6 +20,7 @@ router.register(r'webresourcetypes_linked', WebResourceTypeHLMViewSet)
 router.register(r'webresources_linked', WebResourceHLMViewSet)
 
 urlpatterns = [
+    url(r'^admin/', include('smuggler.urls')),  # before admin url patterns!
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/v1/', include('authentication.urls')),
     url(r'^api/v1/', include(router.urls)),
