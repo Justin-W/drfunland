@@ -38,7 +38,7 @@ class Local(Common):
     }
 
     # Smuggler
-    SMUGGLER_FIXTURE_DIR = 'drfunapp/drfundata/fixtures/'
+    SMUGGLER_FIXTURE_DIR = 'drfunapp/drfundata/fixtures'
     # SMUGGLER_FORMAT = 'json'
     # SMUGGLER_INDENT = 2
     # SMUGGLER_EXCLUDE_LIST = ['app_label.ModelName']
