@@ -5,6 +5,9 @@
 
 source ./.init.sh
 
+# see: http://stackoverflow.com/a/23342259
+vecho() { echo "\$ $@" ; "$@" ; }
+
 
 ### determine the output file, path, etc.
 OUTPUT_FILENAME=${1:-"$0.log"}
@@ -127,26 +130,47 @@ type fab
 
 echo ""
 echo "graphviz:"
-type dot
-dot -V 2>&1
-type neato
-neato -V 2>&1
+vecho type dot
+vecho dot -V 2>&1
+vecho type neato
+vecho neato -V 2>&1
 
 echo ""
 echo "pygraphviz dependencies:"
 #adapted from pygraphviz's setup_extra.py file
-pkg-config --libs-only-L libcgraph
-pkg-config --cflags-only-I libcgraph
-dotneato-config --ldflags --cflags
+vecho pkg-config --libs-only-L libcgraph 2>&1
+vecho pkg-config --cflags-only-I libcgraph 2>&1
+vecho dotneato-config --ldflags --cflags 2>&1
+
+echo ""
+echo "pygraphviz: python tests:"
+echo -n "import test: " && python -c 'import pygraphviz' 2>&1 && echo 'PASSED.' || echo 'FAILED!'
+#python -c 'import pygraphviz as pgv; print vars(pgv)' 2>&1
+#python -c 'import pygraphviz as pgv; print pgv' 2>&1
+echo -n "location: " && python -c 'import inspect, pygraphviz as pgv; print inspect.getfile(pgv)' 2>&1
+echo -n "version: " && python -c 'import pygraphviz as pgv; print pgv.__version__' 2>&1
+#echo "help:" && python -c 'import pygraphviz as pgv; print help(pgv)' 2>&1
 
 echo ""
 echo "java:"
-type java
-java -version 2>&1
+vecho type java
+vecho java -version 2>&1
 
 echo ""
-echo "IntelliJ:"
-ls /Applications/ | grep -i intellij
+echo "Applications: IDEs:"
+ls /Applications/ | grep -i -E 'intellij|IDEA|pycharm|eclipse|sublime|IDE|dev'
+
+echo ""
+echo "Applications: SCM:"
+ls /Applications/ | grep -i -E 'git|hg|svn|bucket|Source|Code|scm|version'
+
+echo ""
+echo "Applications: DBs:"
+ls /Applications/ | grep -i -E 'postgres|SQL|DB|database'
+
+echo ""
+echo "Applications: Browsers:"
+ls /Applications/ | grep -i -E 'chrome|safari|firefox|opera|browse|web|internet'
 
 
 ### Clean Up
