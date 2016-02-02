@@ -10,8 +10,3 @@ mkdocs==0.14.0
 
 # Command Utils
 Fabric==1.10.2
-
-# dump/load fixtures via the Admin UI
-# Note: we install from a local file since 0.6.1 does not support Django 1.9, and 0.7.0 is not yet released.
-#django-smuggler==0.7.0
-./requirements/dependencies/django-smuggler-0.7.0.dev0.zip
