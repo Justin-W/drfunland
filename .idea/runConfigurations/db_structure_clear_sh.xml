@@ -1,0 +1,15 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="db.structure.clear.sh" type="BashConfigurationType" factoryName="Bash" folderName="db scripts" singleton="true">
+    <option name="INTERPRETER_OPTIONS" value="" />
+    <option name="INTERPRETER_PATH" value="/bin/bash" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/scripts" />
+    <option name="PARENT_ENVS" value="true" />
+    <option name="SCRIPT_NAME" value="db.structure.clear.sh" />
+    <option name="PARAMETERS" value="" />
+    <module name="drfunland" />
+    <envs />
+    <method>
+      <option name="Make" enabled="false" />
+    </method>
+  </configuration>
+</component>
