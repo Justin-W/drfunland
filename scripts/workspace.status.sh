@@ -77,8 +77,13 @@ echo ""
 
 echo ""
 echo "python:"
-type python
+vecho type python
 python --version 2>&1
+
+echo ""
+echo "python3:"
+vecho type python3
+python3 --version 2>&1
 
 echo ""
 echo "bash:"
