@@ -111,6 +111,12 @@ echo "brew cask:"
 brew cask --version
 
 echo ""
+echo "xcode command line tools:"
+xcode-select -p 1>/dev/null && echo 'xcode-select: installed' || \
+    echo 'xcode-select: not installed (consider running "xcode-select --install")'
+xcode-select -p 1>/dev/null && echo -n 'xcode-select location: ' && xcode-select -p
+
+echo ""
 echo "pkg-config:"
 type pkg-config
 pkg-config --version
